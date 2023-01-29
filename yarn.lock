@@ -1451,6 +1451,7 @@ __metadata:
   resolution: "core@workspace:apps/core"
   dependencies:
     "@cloudflare/workers-types": ^4.20230115.0
+    hono: ^2.7.5
     typescript: ^4.9.4
     wrangler: 2.6.2
   languageName: unknown
@@ -2768,6 +2769,13 @@ __metadata:
   dependencies:
     function-bind: ^1.1.1
   checksum: b9ad53d53be4af90ce5d1c38331e712522417d017d5ef1ebd0507e07c2fbad8686fffb8e12ddecd4c39ca9b9b47431afbb975b8abf7f3c3b82c98e9aad052792
+  languageName: node
+  linkType: hard
+
+"hono@npm:^2.7.5":
+  version: 2.7.5
+  resolution: "hono@npm:2.7.5"
+  checksum: f1d0813dba4561516057bbd4ba9e8d55fa5fd9ceb7ba828bee4db226b02a45c1bb01971e0d22c19a00c180f7e36e48d867bb5b3398509f4e33d2ded4ee21c699
   languageName: node
   linkType: hard
 
