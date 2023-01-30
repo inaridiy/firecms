@@ -44,12 +44,28 @@ class D1Driver implements Driver {
   async acquireConnection(): Promise<DatabaseConnection> {
     return new D1Connection(this.config);
   }
+
+  async beginTransaction(conn: D1Connection): Promise<void> {
+    return await conn.beginTransaction();
+  }
+
+  async commitTransaction(conn: D1Connection): Promise<void> {
+    return await conn.commitTransaction();
+  }
+
+  async rollbackTransaction(conn: D1Connection): Promise<void> {
+    return await conn.rollbackTransaction();
+  }
+
+  async releaseConnection(_conn: D1Connection): Promise<void> {}
+
+  async destroy(): Promise<void> {}
 }
 
 class D1Connection implements DatabaseConnection {
   constructor(private config: D1DialectConfig) {}
 
-  async executeQuery<O>(compiledQuery: CompiledQuery): Promise<QueryResult> {
+  async executeQuery<O>(compiledQuery: CompiledQuery): Promise<QueryResult<O>> {
     const results = await this.config.database
       .prepare(compiledQuery.sql)
       .bind(...compiledQuery.parameters)
@@ -61,5 +77,24 @@ class D1Connection implements DatabaseConnection {
     return {
       rows: (results.results as O[]) || [],
     };
+  }
+
+  async beginTransaction() {
+    throw new Error("Transactions are not supported yet.");
+  }
+
+  async commitTransaction() {
+    throw new Error("Transactions are not supported yet.");
+  }
+
+  async rollbackTransaction() {
+    throw new Error("Transactions are not supported yet.");
+  }
+
+  async *streamQuery<O>(
+    _compiledQuery: CompiledQuery,
+    _chunkSize: number
+  ): AsyncIterableIterator<QueryResult<O>> {
+    throw new Error("Streaming are not supported yet.");
   }
 }
