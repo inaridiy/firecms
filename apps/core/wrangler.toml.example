@@ -5,5 +5,5 @@ compatibility_date = "2023-01-29"
 [[ d1_databases ]]
 binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "my-d1"
-database_id = "b9e1057d-7fec-424c-b2a7-584770ac76cd"
-preview_database_id="b9e1057d-7fec-424c-b2a7-584770ac76cd"
+database_id = "hoge"
+preview_database_id="fuga"
