@@ -12,9 +12,7 @@ export class UserService {
   private readonly profileRepo: UserProfileRepository;
 
   constructor(inject: UserServiceInjections) {
-    const repoInjections = {
-      db: inject.db,
-    };
+    const repoInjections = { db: inject.db };
     this.credentialRepo = new UserCredentialRepository(repoInjections);
     this.profileRepo = new UserProfileRepository(repoInjections);
   }
