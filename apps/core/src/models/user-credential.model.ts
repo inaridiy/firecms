@@ -1,6 +1,8 @@
 export interface UserCredentialProps {
   id: string;
-  password_hash: string;
+  passwordHash: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class UserCredential {
@@ -22,11 +24,12 @@ export class UserCredential {
 
   static async create(data: { id: string; password: string }) {
     const hexHash = await UserCredential.hashPassword(data.password);
-    return new UserCredential({ id: data.id, password_hash: hexHash });
+    return new UserCredential({ id: data.id, passwordHash: hexHash });
   }
 
-  async login(data: { id: string; password: string }) {
+  async login(data: { password: string }) {
     const hexHash = await UserCredential.hashPassword(data.password);
-    return this.props.id === data.id && this.props.password_hash === hexHash;
+    if (this.props.passwordHash !== hexHash)
+      throw new Error("Invalid password");
   }
 }

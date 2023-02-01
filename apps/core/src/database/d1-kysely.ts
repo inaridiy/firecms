@@ -1,4 +1,4 @@
-import { Kysely, Generated } from "kysely";
+import { Kysely } from "kysely";
 import { D1Dialect } from "./D1Dialect/D1Dialect";
 import { Database } from "./schema";
 
