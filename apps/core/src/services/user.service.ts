@@ -1,4 +1,3 @@
-import { Jwt } from "hono/utils/jwt";
 import { UserFactory } from "../models/factories/user.factory";
 import { UserCredentialRepository } from "../repositories/user-credential.repository";
 import { UserProfileRepository } from "../repositories/user-profile.repository";
@@ -12,7 +11,7 @@ export class UserService {
   private readonly credentialRepo: UserCredentialRepository;
   private readonly profileRepo: UserProfileRepository;
 
-  constructor(private inject: UserServiceInjections) {
+  constructor(inject: UserServiceInjections) {
     const repoInjections = {
       db: inject.db,
     };
@@ -26,20 +25,10 @@ export class UserService {
     await this.credentialRepo.create(credential);
     await this.profileRepo.create(profile);
 
-    //TODO: Refresh token
-    const token = await Jwt.sign(
-      {
-        user_id: credential.props.id,
-        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7, //1 week
-      },
-      this.inject.secret
-    );
-
     return {
       id: profile.props.id,
       name: profile.props.name,
       email: profile.props.email,
-      token,
     };
   }
 }
