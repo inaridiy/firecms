@@ -22,9 +22,22 @@ user.post("/signup", async (c) => {
   }
 });
 
+user.get("/users/:name", async (c) => {
+  const userQueryService = new UserQueryService({ db: c.env.DB });
+  try {
+    const users = await userQueryService.queryUsers({
+      name: c.req.param("name"),
+    });
+
+    return c.json(users[0]);
+  } catch (e) {
+    console.error(e);
+    return c.json(e, 500);
+  }
+});
+
 user.get("/users", async (c) => {
   const userQueryService = new UserQueryService({ db: c.env.DB });
-
   const [limit] = [c.req.query("limit")]; // Experimental Writing
   try {
     const users = await userQueryService.queryUsers({
