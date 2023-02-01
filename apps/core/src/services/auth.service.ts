@@ -1,6 +1,5 @@
 import { Jwt } from "hono/utils/jwt";
 import { UserCredentialRepository } from "../repositories/user-credential.repository";
-import { D1Kysely } from "../database/d1-kysely";
 
 export interface AuthServiceInjections {
   db: D1Database;
@@ -26,7 +25,7 @@ export class AuthService {
 
   constructor(private inject: AuthServiceInjections) {
     this.credentialRepo = new UserCredentialRepository({
-      db: new D1Kysely(inject.db),
+      db: inject.db,
     });
   }
 

@@ -1,16 +1,17 @@
 import { Kysely } from "kysely";
+import { D1Kysely } from "../database/d1-kysely";
 import { Database } from "../database/schema";
 import { UserProfile } from "../models/user-profile.model";
 
 export interface UserProfileRepositoryInjections {
-  db: Kysely<Database>;
+  db: D1Database;
 }
 
 export class UserProfileRepository {
   private db: Kysely<Database>;
 
   constructor(inject: UserProfileRepositoryInjections) {
-    this.db = inject.db;
+    this.db = new D1Kysely(inject.db);
   }
 
   async create(userProfile: UserProfile) {

@@ -1,5 +1,4 @@
 import { Hono } from "hono";
-import { validator } from "hono/validator";
 import type { HonoConfig } from "../config";
 import { AuthService } from "../services/auth.service";
 

@@ -1,5 +1,4 @@
 import { Jwt } from "hono/utils/jwt";
-import { D1Kysely } from "../database/d1-kysely";
 import { UserFactory } from "../models/factories/user.factory";
 import { UserCredentialRepository } from "../repositories/user-credential.repository";
 import { UserProfileRepository } from "../repositories/user-profile.repository";
@@ -15,7 +14,7 @@ export class UserService {
 
   constructor(private inject: UserServiceInjections) {
     const repoInjections = {
-      db: new D1Kysely(inject.db),
+      db: inject.db,
     };
     this.credentialRepo = new UserCredentialRepository(repoInjections);
     this.profileRepo = new UserProfileRepository(repoInjections);
