@@ -33,7 +33,7 @@ yarn-error.log*
 .turbo
 
 # yarn
-.yarn/cache
+.yarn
 !.yarn/release/*
 
 # cloudflare
