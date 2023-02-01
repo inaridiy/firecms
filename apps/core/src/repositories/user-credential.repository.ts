@@ -2,14 +2,14 @@ import { Kysely } from "kysely";
 import { Database } from "../database/schema";
 import { UserCredential } from "../models/user-credential.model";
 
-export interface UserCredentialInjections {
+export interface UserCredentialRepositoryInjections {
   db: Kysely<Database>;
 }
 
 export class UserCredentialRepository {
   private db: Kysely<Database>;
 
-  constructor(inject: UserCredentialInjections) {
+  constructor(inject: UserCredentialRepositoryInjections) {
     this.db = inject.db;
   }
 
@@ -35,6 +35,8 @@ export class UserCredentialRepository {
       new UserCredential({
         id: result.id,
         passwordHash: result.password_hash,
+        createdAt: result.created_at,
+        updatedAt: result.updated_at,
       })
     );
   }
@@ -45,13 +47,15 @@ export class UserCredentialRepository {
       .selectAll()
       .innerJoin("user_profile", "user_credentials.id", "user_profile.user_id")
       .where("user_profile.email", "=", email)
-      .executeTakeFirstOrThrow();
+      .executeTakeFirst();
 
     return (
       result &&
       new UserCredential({
         id: result.id,
         passwordHash: result.password_hash,
+        createdAt: result.created_at,
+        updatedAt: result.updated_at,
       })
     );
   }
@@ -62,13 +66,15 @@ export class UserCredentialRepository {
       .selectAll()
       .innerJoin("user_profile", "user_credentials.id", "user_profile.user_id")
       .where("user_profile.name", "=", username)
-      .executeTakeFirstOrThrow();
+      .executeTakeFirst();
 
     return (
       result &&
       new UserCredential({
         id: result.id,
         passwordHash: result.password_hash,
+        createdAt: result.created_at,
+        updatedAt: result.updated_at,
       })
     );
   }

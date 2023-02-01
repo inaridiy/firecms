@@ -23,6 +23,7 @@ export class UserCredential {
   }
 
   static async create(data: { id: string; password: string }) {
+    if (data.password.length < 8) throw new Error("Password too short");
     const hexHash = await UserCredential.hashPassword(data.password);
     return new UserCredential({ id: data.id, passwordHash: hexHash });
   }

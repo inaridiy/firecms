@@ -17,7 +17,7 @@ export type LoginData =
       password: string;
     }
   | {
-      username: string;
+      name: string;
       password: string;
     };
 
@@ -36,15 +36,15 @@ export class AuthService {
         ? await this.credentialRepo.findCredentialByUserId(data.user_id)
         : "email" in data
         ? await this.credentialRepo.findCredentialByUserEmail(data.email)
-        : "username" in data
-        ? await this.credentialRepo.findCredentialByUserName(data.username)
+        : "name" in data
+        ? await this.credentialRepo.findCredentialByUserName(data.name)
         : undefined;
 
     if (!credential) throw new Error("invalid_credentials");
     await credential.login(data);
 
     //TODO: Refresh token
-    const token = Jwt.sign(
+    const token = await Jwt.sign(
       {
         user_id: credential.props.id,
         exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7, //1 week

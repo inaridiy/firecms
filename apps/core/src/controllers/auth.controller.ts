@@ -16,6 +16,7 @@ auth.post("/login", async (c) => {
     return c.json({ token });
   } catch (_e) {
     const e = _e as Error;
+    console.error(e);
     if (e.message === "invalid_credentials") {
       return c.text("invalid credentials", 401);
     } else {
