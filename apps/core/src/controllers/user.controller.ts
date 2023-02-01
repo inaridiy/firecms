@@ -1,11 +1,12 @@
 import { Hono } from "hono";
-import app from "..";
+import { jwt } from "hono/jwt";
+
 import type { HonoConfig } from "../config";
 import { UserService } from "../services/user.service";
 
 const user = new Hono<HonoConfig>();
 
-user.post("/create", async (c) => {
+user.post("/signup", async (c) => {
   const userService = new UserService({
     db: c.env.DB,
     secret: c.env.JWT_SECRET,
@@ -20,5 +21,13 @@ user.post("/create", async (c) => {
     return c.json(e, 500);
   }
 });
+
+user.get(
+  "/user/:id",
+  jwt({
+    secret: JWT_SECRET,
+  }),
+  async (c) => {}
+);
 
 export default user;
