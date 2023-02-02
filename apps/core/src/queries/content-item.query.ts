@@ -34,11 +34,7 @@ export class ContentItemQueryService {
 
     if (!schema) throw new Error("invalid_table_name");
 
-    let query = this.db
-      .selectFrom(data.tableName)
-      .selectAll()
-      .offset(data.offset || 0)
-      .limit(data.limit || DEFAULT_CONTENT_ITEM_LIMIT);
+    let query = this.db.selectFrom(data.tableName).selectAll();
 
     if (data.ids) {
       const ids = data.ids.split(",");
@@ -59,6 +55,10 @@ export class ContentItemQueryService {
       for (const order of orders)
         query = query.orderBy(order.field, order.direction);
     }
+
+    query = query
+      .offset(data.offset ?? 0)
+      .limit(data.limit ?? DEFAULT_CONTENT_ITEM_LIMIT);
 
     return query.execute();
   }

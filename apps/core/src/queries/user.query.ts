@@ -9,7 +9,9 @@ export interface UserQueryInjections {
 interface QueryUsersData {
   email?: string;
   name?: string;
+  q?: string;
   id?: string;
+  ids?: string;
   limit?: number;
   offset?: number;
 }
@@ -24,15 +26,20 @@ export class UserQueryService {
   }
 
   queryUsers(data: QueryUsersData) {
-    let query = this.db
-      .selectFrom("user_profile")
-      .selectAll()
-      .offset(data.offset || 0)
-      .limit(data.limit || DEFAULT_USERS_LIMIT);
+    let query = this.db.selectFrom("user_profile").selectAll();
 
     if (data.email) query = query.where("email", "=", data.email);
     if (data.name) query = query.where("name", "=", data.name);
     if (data.id) query = query.where("user_id", "=", data.id);
+    if (data.ids) query = query.where("user_id", "in", data.ids.split(","));
+    if (data.q) {
+      for (const column of ["email", "name"] as const)
+        query = query.orWhere(column, "like", `%${data.q}%`);
+    }
+
+    query = query
+      .offset(data.offset ?? 0)
+      .limit(data.limit ?? DEFAULT_USERS_LIMIT);
 
     return query.execute();
   }

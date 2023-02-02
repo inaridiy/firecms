@@ -21,13 +21,17 @@ contentType.get("/:tableName", async (c) => {
 contentType.get("/", async (c) => {
   const contentTypeQueryService = new ContentTypeQueryService({ db: c.env.DB });
 
-  const [limit] = [c.req.query("limit")]; // Experimental Writing
+  const [limit, offset] = [c.req.query("limit"), c.req.query("offset")];
+  console.log(limit);
   try {
     const contentTypes = await contentTypeQueryService.queryContentTypes({
       name: c.req.query("name"),
       tableName: c.req.query("tableName"),
+      q: c.req.query("q"),
       id: c.req.query("id"),
+      ids: c.req.query("ids"),
       limit: limit ? Number(limit) : undefined,
+      offset: offset ? Number(offset) : undefined,
     });
     return c.json(contentTypes);
   } catch (e) {

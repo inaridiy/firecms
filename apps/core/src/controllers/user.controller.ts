@@ -39,13 +39,16 @@ user.get("/:name", async (c) => {
 user.get("/", async (c) => {
   const userQueryService = new UserQueryService({ db: c.env.DB });
 
-  const [limit] = [c.req.query("limit")]; // Experimental Writing
+  const [limit, offset] = [c.req.query("limit"), c.req.query("offset")];
   try {
     const users = await userQueryService.queryUsers({
       email: c.req.query("email"),
       name: c.req.query("name"),
+      q: c.req.query("q"),
       id: c.req.query("id"),
+      ids: c.req.query("ids"),
       limit: limit ? Number(limit) : undefined,
+      offset: offset ? Number(offset) : undefined,
     });
 
     return c.json(users);
