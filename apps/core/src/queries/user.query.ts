@@ -11,6 +11,7 @@ interface QueryUsersData {
   name?: string;
   id?: string;
   limit?: number;
+  offset?: number;
 }
 
 const DEFAULT_USERS_LIMIT = 10;
@@ -26,6 +27,7 @@ export class UserQueryService {
     let query = this.db
       .selectFrom("user_profile")
       .selectAll()
+      .offset(data.offset || 0)
       .limit(data.limit || DEFAULT_USERS_LIMIT);
 
     if (data.email) query = query.where("email", "=", data.email);

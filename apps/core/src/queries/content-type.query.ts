@@ -11,6 +11,7 @@ interface QueryContentTypeData {
   tableName?: string;
   id?: string;
   limit?: number;
+  offset?: number;
 }
 
 const DEFAULT_CONTENT_TYPE_LIMIT = 10;
@@ -26,6 +27,7 @@ export class ContentTypeQueryService {
     let query = this.db
       .selectFrom("content_types")
       .selectAll()
+      .offset(data.offset || 0)
       .limit(data.limit || DEFAULT_CONTENT_TYPE_LIMIT);
 
     if (data.name) query = query.where("name", "=", data.name);

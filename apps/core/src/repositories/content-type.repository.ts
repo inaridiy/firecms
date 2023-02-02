@@ -27,13 +27,7 @@ export class ContentTypeRepository {
 
     let contentTable = this.db.schema
       .createTable(contentType.props.tableName)
-      .addColumn("id", "text", (c) => c.primaryKey())
-      .addColumn("created_at", "text", (c) =>
-        c.defaultTo(sql`(DATETIME('now', 'localtime'))`).notNull()
-      )
-      .addColumn("updated_at", "text", (c) =>
-        c.defaultTo(sql`(DATETIME('now', 'localtime'))`).notNull()
-      );
+      .addColumn("id", "text", (c) => c.primaryKey());
 
     for (const [key, data] of Object.entries(contentType.props.schema)) {
       contentTable = contentTable.addColumn(key, data.sqlType, (c) => {
@@ -42,6 +36,13 @@ export class ContentTypeRepository {
         return c;
       });
     }
+    contentTable = contentTable
+      .addColumn("created_at", "text", (c) =>
+        c.defaultTo(sql`(DATETIME('now', 'localtime'))`).notNull()
+      )
+      .addColumn("updated_at", "text", (c) =>
+        c.defaultTo(sql`(DATETIME('now', 'localtime'))`).notNull()
+      );
 
     await contentTable.execute();
   }
