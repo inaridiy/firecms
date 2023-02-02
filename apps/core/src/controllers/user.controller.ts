@@ -22,6 +22,20 @@ user.post("/", async (c) => {
   }
 });
 
+user.get("/:name", async (c) => {
+  const userQueryService = new UserQueryService({ db: c.env.DB });
+
+  try {
+    const users = await userQueryService.queryUsers({
+      name: c.req.param("name"),
+    });
+    return c.json(users[0]);
+  } catch (e) {
+    console.error(e);
+    return c.json(e, 500);
+  }
+});
+
 user.get("/", async (c) => {
   const userQueryService = new UserQueryService({ db: c.env.DB });
 
