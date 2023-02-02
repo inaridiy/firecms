@@ -5,7 +5,7 @@ import { UserQueryService } from "../queries/user.query";
 
 const user = new Hono<HonoConfig>();
 
-user.post("/signup", async (c) => {
+user.post("/users", async (c) => {
   const userService = new UserService({
     db: c.env.DB,
     secret: c.env.JWT_SECRET,
