@@ -7,18 +7,21 @@ export type ContentFieldTypes =
   | "markdown"
   | "json";
 
+export type ContentSchema = {
+  [key: string]: {
+    name?: string;
+    type: ContentFieldTypes;
+    sqlType: "text" | "integer" | "real";
+    required?: boolean;
+    unique?: boolean;
+  };
+};
+
 export interface ContentTypeProps {
   id: string;
   name: string;
   tableName: string;
-  schema: {
-    [key: string]: {
-      type: ContentFieldTypes;
-      sqlType: "text" | "integer" | "real";
-      required?: boolean;
-      unique?: boolean;
-    };
-  };
+  schema: ContentSchema;
   createdAt?: Date;
   updatedAt?: Date;
 }

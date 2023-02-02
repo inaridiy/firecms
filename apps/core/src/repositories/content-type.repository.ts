@@ -45,4 +45,21 @@ export class ContentTypeRepository {
 
     await contentTable.execute();
   }
+
+  async findByTableName(tableName: string) {
+    const contentType = await this.db
+      .selectFrom("content_types")
+      .selectAll()
+      .where("table_name", "=", tableName)
+      .executeTakeFirst();
+
+    if (!contentType) return undefined;
+
+    return new ContentType({
+      id: contentType.id,
+      name: contentType.name,
+      tableName: contentType.table_name,
+      schema: JSON.parse(contentType.schema),
+    });
+  }
 }
