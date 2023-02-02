@@ -5,7 +5,7 @@ import { UserQueryService } from "../queries/user.query";
 
 const user = new Hono<HonoConfig>();
 
-user.post("/users", async (c) => {
+user.post("/", async (c) => {
   const userService = new UserService({
     db: c.env.DB,
     secret: c.env.JWT_SECRET,
@@ -22,7 +22,7 @@ user.post("/users", async (c) => {
   }
 });
 
-user.get("/users", async (c) => {
+user.get("/", async (c) => {
   const userQueryService = new UserQueryService({ db: c.env.DB });
 
   const [limit] = [c.req.query("limit")]; // Experimental Writing
