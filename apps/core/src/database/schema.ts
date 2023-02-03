@@ -14,4 +14,12 @@ export interface Database {
     created_at: ColumnType<Date, never, never>;
     updated_at: ColumnType<Date, never, string>;
   };
+  content_types: {
+    id: string;
+    name: string;
+    table_name: string;
+    schema: string;
+    created_at: ColumnType<Date, never, never>;
+    updated_at: ColumnType<Date, never, string>;
+  };
 }
