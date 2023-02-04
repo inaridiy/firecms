@@ -2,6 +2,7 @@ import { Kysely } from "kysely";
 import { D1Kysely } from "../database/d1-kysely";
 import { ContentSchema } from "../models/content-type.model";
 import { ContentTypeRepository } from "../repositories/content-type.repository";
+import { parseFilters } from "../utils/parseFilters";
 import { parseOrders } from "../utils/parseOrders";
 
 export interface ContentItemQueryInjections {
@@ -12,12 +13,31 @@ interface QueryContentItemData {
   tableName: string;
   ids?: string;
   q?: string;
+  filters?: string;
   orders?: string;
   limit?: number;
   offset?: number;
 }
 
 const DEFAULT_CONTENT_ITEM_LIMIT = 30;
+const ALLOWED_FILTERS = [
+  "eq",
+  "neq",
+  "gt",
+  "gte",
+  "lt",
+  "lte",
+  "contain",
+] as const;
+const FILTER_SQL_OPERATORS = {
+  eq: "=",
+  neq: "!=",
+  gt: ">",
+  gte: ">=",
+  lt: "<",
+  lte: "<=",
+  contain: "like",
+} as const;
 
 export class ContentItemQueryService {
   private db: Kysely<{ [key: string]: any }>;
@@ -54,6 +74,19 @@ export class ContentItemQueryService {
       const orders = parseOrders(data.orders);
       for (const order of orders)
         query = query.orderBy(order.field, order.direction);
+    }
+
+    if (data.filters) {
+      const filters = parseFilters(data.filters, ALLOWED_FILTERS);
+      for (const filter of filters) {
+        const { field, operator, value } = filter;
+        const column = schema[field];
+        if (!column) throw new Error("invalid_field");
+
+        if (operator === "contain")
+          query = query.where(field, "like", `%${value}%`);
+        else query = query.where(field, FILTER_SQL_OPERATORS[operator], value);
+      }
     }
 
     query = query
