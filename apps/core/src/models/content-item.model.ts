@@ -4,7 +4,7 @@ export interface ContentItemProps {
   id: string;
   tableName: string;
   schema: ContentSchema;
-  data: any;
+  data: Record<string, any>;
 }
 
 export class ContentItem {

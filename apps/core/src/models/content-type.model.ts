@@ -5,12 +5,15 @@ export type ContentFieldTypes =
   | "boolean"
   | "date"
   | "markdown"
-  | "json";
+  | "json"
+  | "reference-to-one"
+  | "reference-to-many";
 
 export type ContentSchema = {
   [key: string]: {
     name?: string;
     type: ContentFieldTypes;
+    referenceTo?: string;
     sqlType: "text" | "integer" | "real";
     required?: boolean;
     unique?: boolean;
@@ -32,6 +35,7 @@ export interface CreateContentTypeData {
   schema: {
     [key: string]: {
       type: ContentFieldTypes;
+      referenceTo?: string;
       required?: boolean;
       unique?: boolean;
     };

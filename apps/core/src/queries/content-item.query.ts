@@ -82,7 +82,6 @@ export class ContentItemQueryService {
         const { field, operator, value } = filter;
         const column = schema[field];
         if (!column) throw new Error("invalid_field");
-
         if (operator === "contain")
           query = query.where(field, "like", `%${value}%`);
         else query = query.where(field, FILTER_SQL_OPERATORS[operator], value);
