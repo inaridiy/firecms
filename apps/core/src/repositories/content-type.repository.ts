@@ -2,6 +2,7 @@ import { CreateTableBuilder, Kysely, sql } from "kysely";
 import { D1Kysely } from "../database/d1-kysely";
 import { Database } from "../database/schema";
 import { ContentType } from "../models/content-type.model";
+import { relationIdName, relationTableName } from "../utils/createKeyName";
 
 export interface ContentTypeRepositoryInjections {
   db: D1Database;
@@ -32,26 +33,30 @@ export class ContentTypeRepository {
 
     for (const [key, data] of Object.entries(contentType.props.schema)) {
       if (data.type === "reference-to-many") {
-        if (!data.referenceTo)
+        const { referenceTo } = data;
+        if (!referenceTo)
           throw new Error("Reference to many must have a referenceTo property");
 
         const { tableName } = contentType.props;
-        const sideTableName = [tableName, key, data.referenceTo].join("_");
+        const sideTableName = relationTableName(key, tableName, referenceTo);
 
         const sideTable = this.db.schema
           .createTable(sideTableName)
-          .addColumn(tableName + "_id", "text", (c) => c.notNull())
-          .addColumn(data.referenceTo + "_id", "text", (c) => c.notNull())
+          .addColumn(relationIdName(tableName), "text", (c) => c.notNull())
+          .addColumn(relationIdName(referenceTo), "text", (c) => c.notNull())
           .addPrimaryKeyConstraint("id", [
-            tableName + "_id",
-            data.referenceTo + "_id",
+            relationIdName(tableName),
+            relationIdName(referenceTo),
           ]);
         sideQuery.push(sideTable);
       } else if (data.type === "reference-to-one") {
-        if (!data.referenceTo)
-          throw new Error("Reference to one must have a referenceTo property");
-        contentTable = contentTable.addColumn(key + "_id", "text", (c) =>
-          c.notNull()
+        const { referenceTo } = data;
+        if (!referenceTo)
+          throw new Error("reference_must_have_reference_to_property");
+        contentTable = contentTable.addColumn(
+          relationIdName(referenceTo),
+          "text",
+          (c) => c.notNull()
         );
       } else {
         contentTable = contentTable.addColumn(key, data.sqlType, (c) => {

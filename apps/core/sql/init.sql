@@ -9,7 +9,7 @@ CREATE TABLE user_credentials (
 
 DROP TABLE IF EXISTS user_profile;
 CREATE TABLE user_profile (
-  user_id TEXT PRIMARY KEY REFERENCES user_credentials(id),
+  id TEXT PRIMARY KEY REFERENCES user_credentials(id),
   name TEXT UNIQUE NOT NULL,
   email TEXT UNIQUE NOT NULL,
   created_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime')),

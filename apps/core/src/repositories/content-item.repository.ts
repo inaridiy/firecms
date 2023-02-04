@@ -1,6 +1,7 @@
 import { Kysely } from "kysely";
 import { ContentItem } from "../models/content-item.model";
 import { D1Kysely } from "../database/d1-kysely";
+import { relationIdName, relationTableName } from "../utils/createKeyName";
 
 export interface ContentItemRepositoryInjections {
   db: D1Database;
@@ -31,12 +32,14 @@ export class ContentItemRepository {
       )
       .map(([key, value]: [string, string[]]) => {
         const { tableName } = contentItem.props;
-        const schema = contentItem.props.schema[key];
-        const sideTableName = [tableName, key, schema.referenceTo].join("_");
+        const { referenceTo } = contentItem.props.schema[key];
+        if (!referenceTo) throw new Error("referenceTo is undefined");
+
+        const sideTableName = relationTableName(key, tableName, referenceTo);
 
         const insertValues = value.map((id) => ({
-          [contentItem.props.tableName + "_id"]: contentItem.props.id,
-          [schema.referenceTo + "_id"]: id,
+          [relationIdName(tableName)]: contentItem.props.id,
+          [relationIdName(referenceTo)]: id,
         }));
         return this.db.insertInto(sideTableName).values(insertValues).execute();
       });

@@ -8,7 +8,7 @@ export interface Database {
     updated_at: ColumnType<Date, never, string>;
   };
   user_profile: {
-    user_id: string;
+    id: string;
     name: string;
     email: string;
     created_at: ColumnType<Date, never, never>;
