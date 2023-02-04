@@ -2,6 +2,7 @@ import { Kysely } from "kysely";
 import { D1Kysely } from "../database/d1-kysely";
 import { ContentSchema } from "../models/content-type.model";
 import { ContentTypeRepository } from "../repositories/content-type.repository";
+import { relationIdName, relationTableName } from "../utils/createKeyName";
 import { parseFilters } from "../utils/parseFilters";
 import { parseOrders } from "../utils/parseOrders";
 
@@ -50,11 +51,33 @@ export class ContentItemQueryService {
 
   async queryContentItems(data: QueryContentItemData) {
     const contentType = await this.typeRepo.findByTableName(data.tableName);
-    const schema = contentType?.props.schema;
+    if (!contentType) throw new Error("invalid_table_name");
+    const { schema, tableName } = contentType?.props;
 
-    if (!schema) throw new Error("invalid_table_name");
+    let query = this.db.selectFrom(data.tableName);
 
-    let query = this.db.selectFrom(data.tableName).selectAll();
+    for (const column of Object.keys(schema)) {
+      if (schema[column].type === "reference-to-many") {
+        const { referenceTo } = schema[column] as { referenceTo: string };
+        const relateTableName = relationTableName(
+          column,
+          tableName,
+          referenceTo
+        );
+
+        query = query
+          .innerJoin(
+            relateTableName,
+            `${tableName}.id`,
+            `${relateTableName}.${relationIdName(tableName)}`
+          )
+          .innerJoin(
+            referenceTo,
+            `${relateTableName}.${relationIdName(referenceTo)}`,
+            `${referenceTo}.id`
+          );
+      }
+    }
 
     if (data.ids) {
       const ids = data.ids.split(",");
@@ -89,6 +112,7 @@ export class ContentItemQueryService {
     }
 
     query = query
+      .selectAll()
       .offset(data.offset ?? 0)
       .limit(data.limit ?? DEFAULT_CONTENT_ITEM_LIMIT);
 
