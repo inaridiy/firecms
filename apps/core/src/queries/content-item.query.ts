@@ -1,4 +1,4 @@
-import { Kysely } from "kysely";
+import { Kysely, sql } from "kysely";
 import { D1Kysely } from "../database/d1-kysely";
 import { ContentSchema } from "../models/content-type.model";
 import { ContentTypeRepository } from "../repositories/content-type.repository";
@@ -39,6 +39,7 @@ const FILTER_SQL_OPERATORS = {
   lte: "<=",
   contain: "like",
 } as const;
+const REF_COLUMN_TYPES = ["reference-to-many", "reference-to-one"];
 
 export class ContentItemQueryService {
   private db: Kysely<{ [key: string]: any }>;
@@ -54,7 +55,13 @@ export class ContentItemQueryService {
     if (!contentType) throw new Error("invalid_table_name");
     const { schema, tableName } = contentType?.props;
 
-    let query = this.db.selectFrom(data.tableName);
+    const mainTableSelects = Object.keys(schema)
+      .filter((key) => !REF_COLUMN_TYPES.includes(schema[key].type))
+      .map((key) => `${tableName}.${key}`);
+
+    let query = this.db
+      .selectFrom(data.tableName)
+      .select([`${tableName}.id`, ...mainTableSelects]);
 
     for (const column of Object.keys(schema)) {
       if (schema[column].type === "reference-to-many") {
@@ -64,6 +71,7 @@ export class ContentItemQueryService {
           tableName,
           referenceTo
         );
+        const relateTableSelects = Object.keys(schema);
 
         query = query
           .innerJoin(
@@ -75,7 +83,8 @@ export class ContentItemQueryService {
             referenceTo,
             `${relateTableName}.${relationIdName(referenceTo)}`,
             `${referenceTo}.id`
-          );
+          )
+          .select([`${referenceTo}.id as ${relationIdName(referenceTo)}`]);
       }
     }
 
@@ -112,7 +121,6 @@ export class ContentItemQueryService {
     }
 
     query = query
-      .selectAll()
       .offset(data.offset ?? 0)
       .limit(data.limit ?? DEFAULT_CONTENT_ITEM_LIMIT);
 
