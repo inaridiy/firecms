@@ -22,4 +22,13 @@ export interface Database {
     created_at: ColumnType<Date, never, never>;
     updated_at: ColumnType<Date, never, string>;
   };
+  file_objects: {
+    id: string;
+    name: string | null;
+    content_type: string;
+    size: number;
+    metadata: any;
+    created_at: ColumnType<Date, never, never>;
+    updated_at: ColumnType<Date, never, string>;
+  };
 }

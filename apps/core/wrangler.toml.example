@@ -7,3 +7,8 @@ binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "my-d1"
 database_id = "hoge"
 preview_database_id="fuga"
+
+[[r2_buckets]]
+binding = 'BUCKET'
+bucket_name = 'hoge'
+preview_bucket_name = 'fuga'

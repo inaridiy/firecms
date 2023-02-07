@@ -32,3 +32,17 @@ CREATE TABLE content_types (
 
 CREATE INDEX IF NOT EXISTS content_types_name ON content_types(name);
 CREATE INDEX IF NOT EXISTS content_types_table_name ON content_types(table_name);
+
+DROP TABLE IF EXISTS file_objects;
+CREATE TABLE file_objects(
+  id TEXT PRIMARY KEY,
+  name TEXT UNIQUE,
+  content_type TEXT NOT NULL,
+  size INTEGER NOT NULL,
+  metadata TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime')),
+  updated_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime'))
+
+);
+
+CREATE INDEX IF NOT EXISTS file_objects_name ON file_objects(name);
