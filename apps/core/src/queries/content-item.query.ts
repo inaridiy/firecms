@@ -1,6 +1,6 @@
-import { Kysely, sql } from "kysely";
+import { singularize as toS } from "../utils/inflection";
+import { Kysely } from "kysely";
 import { D1Kysely } from "../database/d1-kysely";
-import { ContentSchema } from "../models/content-type.model";
 import { ContentTypeRepository } from "../repositories/content-type.repository";
 import { relationIdName, relationTableName } from "../utils/createKeyName";
 import { parseFilters } from "../utils/parseFilters";
@@ -50,10 +50,19 @@ export class ContentItemQueryService {
     this.typeRepo = new ContentTypeRepository({ db: inject.db });
   }
 
+  async queryContentTypes() {
+    const contentTypeList = await this.typeRepo.findAll();
+    const contentTypeEntries = contentTypeList.map(
+      (cType) => [cType.props.tableName, cType.props] as const
+    );
+    const contentTypes = Object.fromEntries(contentTypeEntries);
+    return contentTypes;
+  }
+
   async queryContentItems(data: QueryContentItemData) {
-    const contentType = await this.typeRepo.findByTableName(data.tableName);
-    if (!contentType) throw new Error("invalid_table_name");
-    const { schema, tableName } = contentType?.props;
+    const contentTypes = await this.queryContentTypes();
+    if (!contentTypes[data.tableName]) throw new Error("invalid_table_name");
+    const { schema, tableName } = contentTypes[data.tableName];
 
     const mainTableSelects = Object.keys(schema)
       .filter((key) => !REF_COLUMN_TYPES.includes(schema[key].type))
@@ -64,28 +73,31 @@ export class ContentItemQueryService {
       .select([`${tableName}.id`, ...mainTableSelects]);
 
     for (const column of Object.keys(schema)) {
-      if (schema[column].type === "reference-to-many") {
-        const { referenceTo } = schema[column] as { referenceTo: string };
-        const relateTableName = relationTableName(
-          column,
-          tableName,
-          referenceTo
-        );
-        const relateTableSelects = Object.keys(schema);
+      if (schema[column].type !== "reference-to-many") continue;
+      const { referenceTo: refTo } = schema[column] as {
+        referenceTo: string;
+      };
+      const relateTableName = relationTableName(column, tableName, refTo);
+      const { schema: refSchema } = contentTypes[refTo];
+      const refTableSelects = Object.keys(refSchema)
+        .filter((s) => !REF_COLUMN_TYPES.includes(refSchema[s].type))
+        .map((k) => `${refTo}.${k} as ${toS(refTo)}_${k}`);
 
-        query = query
-          .innerJoin(
-            relateTableName,
-            `${tableName}.id`,
-            `${relateTableName}.${relationIdName(tableName)}`
-          )
-          .innerJoin(
-            referenceTo,
-            `${relateTableName}.${relationIdName(referenceTo)}`,
-            `${referenceTo}.id`
-          )
-          .select([`${referenceTo}.id as ${relationIdName(referenceTo)}`]);
-      }
+      query = query
+        .innerJoin(
+          relateTableName,
+          `${tableName}.id`,
+          `${relateTableName}.${relationIdName(tableName)}`
+        )
+        .innerJoin(
+          refTo,
+          `${relateTableName}.${relationIdName(refTo)}`,
+          `${refTo}.id`
+        )
+        .select([
+          `${refTo}.id as ${relationIdName(refTo)}`,
+          ...refTableSelects,
+        ]);
     }
 
     if (data.ids) {
@@ -124,6 +136,53 @@ export class ContentItemQueryService {
       .offset(data.offset ?? 0)
       .limit(data.limit ?? DEFAULT_CONTENT_ITEM_LIMIT);
 
-    return query.execute();
+    const result = await query.execute();
+
+    const groupedResult = result.reduce((obj, cur) => {
+      const { id } = cur;
+      if (id in obj) obj[id].push(cur);
+      else obj[id] = [cur];
+      return obj;
+    }, {} as { [key: string]: any[] });
+
+    const contentItems = Object.entries(groupedResult).map(([key, items]) => {
+      const refColumns = Object.keys(schema)
+        .filter((c) => REF_COLUMN_TYPES.includes(schema[c].type))
+        .map((c) => c);
+
+      let allRefKeys: string[] = [];
+      let refFieldValues = {} as { [key: string]: any };
+
+      for (const refColumn of refColumns) {
+        const refType = schema[refColumn];
+        const { referenceTo: refTo } = refType as { referenceTo: string };
+        const refSchema = contentTypes[refTo].schema;
+        const refKeys = Object.keys(refSchema)
+          .filter((s) => !REF_COLUMN_TYPES.includes(refSchema[s].type))
+          .map((k) => `${toS(refTo)}_${k}`)
+          .concat(relationIdName(refTo));
+        allRefKeys = [...allRefKeys, ...refKeys];
+
+        for (const item of items) {
+          const refItem = Object.entries(item)
+            .filter(([key]) => refKeys.includes(key))
+            .map(([key, value]) => [key.replace(`${toS(refTo)}_`, ""), value]);
+          const refItemObj = Object.fromEntries(refItem);
+          if (refColumn in refFieldValues)
+            refFieldValues[refColumn].push(refItemObj);
+          else refFieldValues[refColumn] = [refItemObj];
+        }
+      }
+
+      const mainItem = Object.entries(items[0]).reduce((obj, [key, value]) => {
+        if (allRefKeys.includes(key)) return obj;
+        obj[key] = value;
+        return obj;
+      }, {} as any);
+
+      return { ...mainItem, ...refFieldValues };
+    });
+
+    return contentItems;
   }
 }

@@ -95,4 +95,21 @@ export class ContentTypeRepository {
       schema: JSON.parse(contentType.schema),
     });
   }
+
+  async findAll() {
+    const contentTypes = await this.db
+      .selectFrom("content_types")
+      .selectAll()
+      .execute();
+
+    return contentTypes.map(
+      (contentType) =>
+        new ContentType({
+          id: contentType.id,
+          name: contentType.name,
+          tableName: contentType.table_name,
+          schema: JSON.parse(contentType.schema),
+        })
+    );
+  }
 }
