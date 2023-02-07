@@ -73,7 +73,7 @@ export class ContentItemQueryService {
       .select([`${tableName}.id`, ...mainTableSelects]);
 
     for (const column of Object.keys(schema)) {
-      if (schema[column].type !== "reference-to-many") continue;
+      if (!REF_COLUMN_TYPES.includes(schema[column].type)) continue;
       const { referenceTo: refTo } = schema[column] as {
         referenceTo: string;
       };
@@ -83,21 +83,33 @@ export class ContentItemQueryService {
         .filter((s) => !REF_COLUMN_TYPES.includes(refSchema[s].type))
         .map((k) => `${refTo}.${k} as ${toS(refTo)}_${k}`);
 
-      query = query
-        .innerJoin(
-          relateTableName,
-          `${tableName}.id`,
-          `${relateTableName}.${relationIdName(tableName)}`
-        )
-        .innerJoin(
-          refTo,
-          `${relateTableName}.${relationIdName(refTo)}`,
-          `${refTo}.id`
-        )
-        .select([
-          `${refTo}.id as ${relationIdName(refTo)}`,
-          ...refTableSelects,
-        ]);
+      if (schema[column].type === "reference-to-many")
+        query = query
+          .innerJoin(
+            relateTableName,
+            `${tableName}.id`,
+            `${relateTableName}.${relationIdName(tableName)}`
+          )
+          .innerJoin(
+            refTo,
+            `${relateTableName}.${relationIdName(refTo)}`,
+            `${refTo}.id`
+          )
+          .select([
+            `${refTo}.id as ${relationIdName(refTo)}`,
+            ...refTableSelects,
+          ]);
+      else
+        query = query
+          .innerJoin(
+            refTo,
+            `${tableName}.${relationIdName(refTo)}`,
+            `${refTo}.id`
+          )
+          .select([
+            `${refTo}.id as ${relationIdName(refTo)}`,
+            ...refTableSelects,
+          ]);
     }
 
     if (data.ids) {
@@ -168,7 +180,9 @@ export class ContentItemQueryService {
             .filter(([key]) => refKeys.includes(key))
             .map(([key, value]) => [key.replace(`${toS(refTo)}_`, ""), value]);
           const refItemObj = Object.fromEntries(refItem);
-          if (refColumn in refFieldValues)
+          if (refType.type === "reference-to-one")
+            refFieldValues[refColumn] = refItemObj;
+          else if (refColumn in refFieldValues)
             refFieldValues[refColumn].push(refItemObj);
           else refFieldValues[refColumn] = [refItemObj];
         }
