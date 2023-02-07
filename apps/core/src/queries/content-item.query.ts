@@ -59,6 +59,7 @@ export class ContentItemQueryService {
     return contentTypes;
   }
 
+  // TODO: Refactor this function
   async queryContentItems(data: QueryContentItemData) {
     const contentTypes = await this.queryContentTypes();
     if (!contentTypes[data.tableName]) throw new Error("invalid_table_name");
