@@ -1,6 +1,25 @@
+export const ALLOWED_FILTERS = [
+  "eq",
+  "neq",
+  "gt",
+  "gte",
+  "lt",
+  "lte",
+  "contain",
+] as const;
+export const FILTER_SQL_OPERATORS = {
+  eq: "=",
+  neq: "!=",
+  gt: ">",
+  gte: ">=",
+  lt: "<",
+  lte: "<=",
+  contain: "like",
+} as const;
+
 export const parseFilters = <T extends Readonly<string[]>>(
   filtersStr: string,
-  allowedOperators?: T
+  allowedOperators: T
 ): {
   field: string;
   operator: T[number];

@@ -4,6 +4,8 @@ export interface FileObjectProps {
   contentType: string;
   size: number;
   metadata: any;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class FileObject {

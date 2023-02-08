@@ -3,7 +3,11 @@ import { Kysely } from "kysely";
 import { D1Kysely } from "../database/d1-kysely";
 import { ContentTypeRepository } from "../repositories/content-type.repository";
 import { relationIdName, relationTableName } from "../utils/createKeyName";
-import { parseFilters } from "../utils/parseFilters";
+import {
+  parseFilters,
+  ALLOWED_FILTERS,
+  FILTER_SQL_OPERATORS,
+} from "../utils/parseFilters";
 import { parseOrders } from "../utils/parseOrders";
 
 export interface ContentItemQueryInjections {
@@ -21,24 +25,7 @@ interface QueryContentItemData {
 }
 
 const DEFAULT_CONTENT_ITEM_LIMIT = 30;
-const ALLOWED_FILTERS = [
-  "eq",
-  "neq",
-  "gt",
-  "gte",
-  "lt",
-  "lte",
-  "contain",
-] as const;
-const FILTER_SQL_OPERATORS = {
-  eq: "=",
-  neq: "!=",
-  gt: ">",
-  gte: ">=",
-  lt: "<",
-  lte: "<=",
-  contain: "like",
-} as const;
+
 const REF_COLUMN_TYPES = ["reference-to-many", "reference-to-one"];
 
 export class ContentItemQueryService {

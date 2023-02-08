@@ -26,4 +26,22 @@ export class FileObjectRepository {
       })
       .execute();
   }
+
+  async findByName(name: string) {
+    const result = await this.db
+      .selectFrom("file_objects")
+      .selectAll()
+      .where("name", "=", name)
+      .executeTakeFirst();
+
+    if (!result) return undefined;
+
+    return new FileObject({
+      id: result.id,
+      name: result.name || undefined,
+      contentType: result.content_type,
+      size: result.size,
+      metadata: JSON.parse(result.metadata),
+    });
+  }
 }

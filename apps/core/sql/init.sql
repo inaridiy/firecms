@@ -46,3 +46,4 @@ CREATE TABLE file_objects(
 );
 
 CREATE INDEX IF NOT EXISTS file_objects_name ON file_objects(name);
+CREATE INDEX IF NOT EXISTS file_objects_content_type ON file_objects(content_type);

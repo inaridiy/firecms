@@ -40,6 +40,8 @@ export interface CreateContentTypeData {
       unique?: boolean;
     };
   };
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class ContentType {

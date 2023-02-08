@@ -5,6 +5,8 @@ export interface ContentItemProps {
   tableName: string;
   schema: ContentSchema;
   data: Record<string, any>;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class ContentItem {

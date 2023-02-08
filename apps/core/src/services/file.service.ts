@@ -1,5 +1,6 @@
 import { FileObjectRepository } from "../repositories/file-object.repository";
 import { FileObject } from "../models/file-object.model";
+import { isUuid } from "../utils/isUuid";
 
 export interface FileObjectServiceInjections {
   db: D1Database;
@@ -36,5 +37,17 @@ export class FileObjectService {
         httpMetadata: { contentType: data.contentType },
       }),
     ]);
+  }
+
+  async download(idOrName: string) {
+    const id = isUuid(idOrName)
+      ? idOrName
+      : await this.fileObjectRepo
+          .findByName(idOrName)
+          .then((file) => file?.props.id);
+
+    const file = id && (await this.bucket.get(id));
+    if (!file) return undefined;
+    return file;
   }
 }
