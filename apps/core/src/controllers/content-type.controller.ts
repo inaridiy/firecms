@@ -22,7 +22,6 @@ contentType.get("/", async (c) => {
   const contentTypeQueryService = new ContentTypeQueryService({ db: c.env.DB });
 
   const [limit, offset] = [c.req.query("limit"), c.req.query("offset")];
-  console.log(limit);
   try {
     const contentTypes = await contentTypeQueryService.queryContentTypes({
       name: c.req.query("name"),

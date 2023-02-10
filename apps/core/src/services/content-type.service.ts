@@ -11,6 +11,7 @@ export interface CreateContentTypeData {
   schema: {
     [key: string]: {
       type: ContentFieldTypes;
+      referenceTo: string;
       required?: boolean;
       unique?: boolean;
     };

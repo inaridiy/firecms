@@ -30,8 +30,8 @@ export class UserQueryService {
 
     if (data.email) query = query.where("email", "=", data.email);
     if (data.name) query = query.where("name", "=", data.name);
-    if (data.id) query = query.where("user_id", "=", data.id);
-    if (data.ids) query = query.where("user_id", "in", data.ids.split(","));
+    if (data.id) query = query.where("id", "=", data.id);
+    if (data.ids) query = query.where("id", "in", data.ids.split(","));
     if (data.q) {
       for (const column of ["email", "name"] as const)
         query = query.orWhere(column, "like", `%${data.q}%`);

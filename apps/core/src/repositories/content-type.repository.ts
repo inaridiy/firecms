@@ -1,7 +1,8 @@
-import { Kysely, sql } from "kysely";
+import { CreateTableBuilder, Kysely, sql } from "kysely";
 import { D1Kysely } from "../database/d1-kysely";
 import { Database } from "../database/schema";
 import { ContentType } from "../models/content-type.model";
+import { relationIdName, relationTableName } from "../utils/createKeyName";
 
 export interface ContentTypeRepositoryInjections {
   db: D1Database;
@@ -25,17 +26,47 @@ export class ContentTypeRepository {
       })
       .execute();
 
+    const sideQuery: CreateTableBuilder<string, "id">[] = [];
     let contentTable = this.db.schema
       .createTable(contentType.props.tableName)
       .addColumn("id", "text", (c) => c.primaryKey());
 
     for (const [key, data] of Object.entries(contentType.props.schema)) {
-      contentTable = contentTable.addColumn(key, data.sqlType, (c) => {
-        if (data.required) c = c.notNull();
-        if (data.unique) c = c.unique();
-        return c;
-      });
+      if (data.type === "reference-to-many") {
+        const { referenceTo } = data;
+        if (!referenceTo)
+          throw new Error("Reference to many must have a referenceTo property");
+
+        const { tableName } = contentType.props;
+        const sideTableName = relationTableName(key, tableName, referenceTo);
+
+        const sideTable = this.db.schema
+          .createTable(sideTableName)
+          .addColumn(relationIdName(tableName), "text", (c) => c.notNull())
+          .addColumn(relationIdName(referenceTo), "text", (c) => c.notNull())
+          .addPrimaryKeyConstraint("id", [
+            relationIdName(tableName),
+            relationIdName(referenceTo),
+          ]);
+        sideQuery.push(sideTable);
+      } else if (data.type === "reference-to-one") {
+        const { referenceTo } = data;
+        if (!referenceTo)
+          throw new Error("reference_must_have_reference_to_property");
+        contentTable = contentTable.addColumn(
+          relationIdName(referenceTo),
+          "text",
+          (c) => c.notNull()
+        );
+      } else {
+        contentTable = contentTable.addColumn(key, data.sqlType, (c) => {
+          if (data.required) c = c.notNull();
+          if (data.unique) c = c.unique();
+          return c;
+        });
+      }
     }
+
     contentTable = contentTable
       .addColumn("created_at", "text", (c) =>
         c.defaultTo(sql`(DATETIME('now', 'localtime'))`).notNull()
@@ -44,7 +75,8 @@ export class ContentTypeRepository {
         c.defaultTo(sql`(DATETIME('now', 'localtime'))`).notNull()
       );
 
-    await contentTable.execute();
+    await contentTable.execute(); // TODO: Batch this
+    await Promise.all(sideQuery.map((q) => q.execute()));
   }
 
   async findByTableName(tableName: string) {
@@ -62,5 +94,22 @@ export class ContentTypeRepository {
       tableName: contentType.table_name,
       schema: JSON.parse(contentType.schema),
     });
+  }
+
+  async findAll() {
+    const contentTypes = await this.db
+      .selectFrom("content_types")
+      .selectAll()
+      .execute();
+
+    return contentTypes.map(
+      (contentType) =>
+        new ContentType({
+          id: contentType.id,
+          name: contentType.name,
+          tableName: contentType.table_name,
+          schema: JSON.parse(contentType.schema),
+        })
+    );
   }
 }

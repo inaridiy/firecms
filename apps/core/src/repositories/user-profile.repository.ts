@@ -18,7 +18,7 @@ export class UserProfileRepository {
     await this.db
       .insertInto("user_profile")
       .values({
-        user_id: userProfile.props.id,
+        id: userProfile.props.id,
         name: userProfile.props.name,
         email: userProfile.props.email,
       })
@@ -29,13 +29,13 @@ export class UserProfileRepository {
     const result = await this.db
       .selectFrom("user_profile")
       .selectAll()
-      .where("user_id", "=", userId)
+      .where("id", "=", userId)
       .executeTakeFirst();
 
     return (
       result &&
       new UserProfile({
-        id: result.user_id,
+        id: result.id,
         name: result.name,
         email: result.email,
         createdAt: result.created_at,

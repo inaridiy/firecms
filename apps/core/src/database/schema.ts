@@ -8,7 +8,7 @@ export interface Database {
     updated_at: ColumnType<Date, never, string>;
   };
   user_profile: {
-    user_id: string;
+    id: string;
     name: string;
     email: string;
     created_at: ColumnType<Date, never, never>;
@@ -19,6 +19,23 @@ export interface Database {
     name: string;
     table_name: string;
     schema: string;
+    created_at: ColumnType<Date, never, never>;
+    updated_at: ColumnType<Date, never, string>;
+  };
+  file_objects: {
+    id: string;
+    name: string | null;
+    content_type: string;
+    size: number;
+    metadata: any;
+    created_at: ColumnType<Date, never, never>;
+    updated_at: ColumnType<Date, never, string>;
+  };
+  api_keys: {
+    id: string;
+    name: string;
+    key: string;
+    permissions: string;
     created_at: ColumnType<Date, never, never>;
     updated_at: ColumnType<Date, never, string>;
   };

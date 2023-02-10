@@ -29,6 +29,7 @@ contentItem.get("/:tableName", async (c) => {
       tableName: c.req.param("tableName"),
       ids: c.req.query("ids"),
       q: c.req.query("q"),
+      filters: c.req.query("filters"),
       orders: c.req.query("orders"),
       limit: limit ? parseInt(limit) : undefined,
       offset: offset ? parseInt(offset) : undefined,

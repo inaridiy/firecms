@@ -46,7 +46,7 @@ export class UserCredentialRepository {
     const result = await this.db
       .selectFrom("user_credentials")
       .selectAll()
-      .innerJoin("user_profile", "user_credentials.id", "user_profile.user_id")
+      .innerJoin("user_profile", "user_credentials.id", "user_profile.id")
       .where("user_profile.email", "=", email)
       .executeTakeFirst();
 
@@ -65,7 +65,7 @@ export class UserCredentialRepository {
     const result = await this.db
       .selectFrom("user_credentials")
       .selectAll()
-      .innerJoin("user_profile", "user_credentials.id", "user_profile.user_id")
+      .innerJoin("user_profile", "user_credentials.id", "user_profile.id")
       .where("user_profile.name", "=", username)
       .executeTakeFirst();
 
