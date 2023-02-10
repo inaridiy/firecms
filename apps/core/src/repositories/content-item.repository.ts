@@ -19,7 +19,7 @@ export class ContentItemRepository {
       .map(([key, value]) => {
         const schema = contentItem.props.schema[key];
         if (schema.type === "reference-to-one") {
-          return [key + "_id", value];
+          return [relationIdName(key), value];
         } else if (schema.type !== "reference-to-many") {
           return [key, value];
         }

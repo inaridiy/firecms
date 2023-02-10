@@ -31,4 +31,12 @@ export interface Database {
     created_at: ColumnType<Date, never, never>;
     updated_at: ColumnType<Date, never, string>;
   };
+  api_keys: {
+    id: string;
+    name: string;
+    key: string;
+    permissions: string;
+    created_at: ColumnType<Date, never, never>;
+    updated_at: ColumnType<Date, never, string>;
+  };
 }

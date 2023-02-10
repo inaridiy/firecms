@@ -7,6 +7,7 @@ import user from "./controllers/user.controller";
 import file from "./controllers/file.controller";
 import contentType from "./controllers/content-type.controller";
 import contentItem from "./controllers/content-item.controller";
+import apiKey from "./controllers/api-key.controller";
 
 const app = new Hono<HonoConfig>();
 
@@ -15,6 +16,7 @@ app.use("*", logger());
 app.route("/auth", auth);
 app.route("/users", user);
 app.route("/files", file);
+app.route("/api-keys", apiKey);
 app.route("/content-types", contentType);
 app.route("/contents", contentItem);
 

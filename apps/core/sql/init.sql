@@ -47,3 +47,16 @@ CREATE TABLE file_objects(
 
 CREATE INDEX IF NOT EXISTS file_objects_name ON file_objects(name);
 CREATE INDEX IF NOT EXISTS file_objects_content_type ON file_objects(content_type);
+
+DROP TABLE IF EXISTS api_keys;
+CREATE TABLE api_keys (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  key TEXT NOT NULL,
+  permissions TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime')),
+  updated_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime'))
+);
+
+CREATE INDEX IF NOT EXISTS api_keys_name ON api_keys(name);
+CREATE INDEX IF NOT EXISTS api_keys_key ON api_keys(key);
