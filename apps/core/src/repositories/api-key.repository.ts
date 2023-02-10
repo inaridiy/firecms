@@ -24,4 +24,21 @@ export class APIKeyRepository {
       })
       .execute();
   }
+
+  async findByKey(key: string) {
+    const result = await this.db
+      .selectFrom("api_keys")
+      .where("key", "=", key)
+      .selectAll()
+      .executeTakeFirst();
+
+    if (!result) return undefined;
+
+    return new APIKey({
+      id: result.id,
+      name: result.name,
+      key: result.key,
+      permissions: JSON.parse(result.permissions),
+    });
+  }
 }

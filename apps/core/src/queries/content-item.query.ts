@@ -14,7 +14,7 @@ export interface ContentItemQueryInjections {
   db: D1Database;
 }
 
-interface QueryContentItemData {
+export interface QueryContentItemData {
   tableName: string;
   ids?: string;
   q?: string;
