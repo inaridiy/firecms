@@ -5,13 +5,28 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				content: 'var(--color-text)',
+				'base-100': 'var(--color-base-100)',
+				'base-content': 'var(--color-base-content)',
 				neutral: 'var(--color-neutral)',
 				'neutral-content': 'var(--color-neutral-content)',
 				primary: 'var(--color-primary)',
 				'primary-content': 'var(--color-primary-content)',
 				secondary: 'var(--color-secondary)',
-				'secondary-contetn': 'var(--color-secondary-content)'
+				'secondary-content': 'var(--color-secondary-content)'
+			},
+			borderRadius: {
+				box: 'var(--rounded-box)',
+				btn: 'var(--rounded-btn)'
+			},
+			borderWidth: {
+				box: 'var(--border-box)',
+				btn: 'var(--border-btn)'
+			},
+			transitionDuration: {
+				btn: 'var(--animation-btn)'
+			},
+			scale: {
+				'btn-focus': 'var(--btn-focus-scale)'
 			}
 		}
 	},

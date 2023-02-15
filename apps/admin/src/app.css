@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+	--color-base-100: #ffffff;
+	--color-base-content: #000000;
+	--color-neutral: #000000;
+	--color-neutral-content: #ffffff;
+	--color-primary: #d25741;
+	--color-primary-content: #ffffff;
+	--color-secondary: #00b39e;
+	--color-secondary-content: #ffffff;
+	--rounded-box: 0.25rem;
+	--rounded-btn: 0.25rem;
+	--border-btn: 1px;
+	--border-box: 1px;
+	--animation-btn: 0.2s;
+	--btn-focus-scale: 0.95;
+}
