@@ -15,8 +15,8 @@
 
 	let sideMenuClass: string;
 	$: sideMenuClass = clsx(
-		'h-[100dvh] z-10 bg-base-100 flex-col p-4 border-r w-56',
-		'fixed sm:block',
+		'min-h-[100dvh] z-10 bg-base-100 flex-col p-4 border-r w-2/3 sm:w-56',
+		'fixed sm:static',
 		{
 			'hidden sm:flex': !open,
 			flex: open
