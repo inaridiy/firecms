@@ -5,4 +5,4 @@
 	};
 </script>
 
-<Button color="normal" size="sm" on:click={click}>Hello World</Button>
+<Button color="primary" size="sm" on:click={click}>Hello World</Button>
