@@ -1,6 +1,8 @@
 <script lang="ts">
 	import clsx from 'clsx';
 
+	export let className: string | undefined = undefined;
+	export let type: 'button' | 'submit' | 'reset' = 'button';
 	export let href: string | undefined = undefined;
 	export let color: 'normal' | 'primary' | 'secondary' | 'outline' | 'ghost' = 'normal';
 	export let size: 'normal' | 'sm' | 'lg' = 'normal';
@@ -18,12 +20,14 @@
 			'px-4 py-2 text-sm': size === 'sm',
 			'px-6 py-3 text-base': size === 'normal',
 			'px-8 py-4 text-lg': size === 'lg'
-		}
+		},
+		className
 	);
 </script>
 
 <svelte:element
 	this={href ? 'a' : 'button'}
+	{type}
 	{href}
 	{...$$restProps}
 	on:click

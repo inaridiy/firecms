@@ -1,5 +1,6 @@
-<script>
+<script lang="ts">
 	import Button from '../components/Elements/Button.svelte';
+
 	const click = () => {
 		console.log('Hello World');
 	};
