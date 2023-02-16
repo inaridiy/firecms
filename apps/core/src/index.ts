@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
+import { cors } from "hono/cors";
 import { HonoConfig } from "./config";
 
 import auth from "./controllers/auth.controller";
@@ -13,6 +14,7 @@ import apiCrud from "./controllers/api-crud.controller";
 const app = new Hono<HonoConfig>();
 
 app.use("*", logger());
+app.use("*", cors());
 
 app.route("/auth", auth);
 app.route("/users", user);
