@@ -51,6 +51,6 @@ export class AuthService {
       this.inject.secret
     );
 
-    return { token };
+    return { token, id: credential.props.id };
   }
 }

@@ -12,7 +12,6 @@ export interface ContentTypesRes {
 
 export const fetchContentTypes = async (): Promise<ContentType[]> => {
 	const { data } = await client.get<ContentTypesRes[]>('/content-types');
-	console.log(data);
 	return data.map((contentType) => ({
 		id: contentType.id,
 		name: contentType.name,

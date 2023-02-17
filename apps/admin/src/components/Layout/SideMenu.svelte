@@ -2,6 +2,7 @@
 	import clsx from 'clsx';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { fetchContentTypes } from '../../api/content-types';
+	import { isAuthenticated } from '../../auth';
 
 	export let open = false;
 
@@ -49,7 +50,11 @@
 		</details>
 	</nav>
 	<div class="flex-1" />
-	<div>
-		<a href="/" class={itemClass}>Logout</a>
+	<div class="flex">
+		{#if $isAuthenticated}
+			<a href="/" class={itemClass}>Logout</a>
+		{:else}
+			<a href="/login" class={itemClass}>Login</a>
+		{/if}
 	</div>
 </div>
