@@ -1473,6 +1473,7 @@ __metadata:
     eslint: ^8.28.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-svelte3: ^4.0.0
+    eslint-plugin-tailwindcss: ^3.9.0
     postcss: ^8.4.21
     prettier: ^2.8.0
     prettier-plugin-svelte: ^2.8.1
@@ -3027,6 +3028,18 @@ eslint-config-turbo@latest:
   languageName: node
   linkType: hard
 
+"eslint-plugin-tailwindcss@npm:^3.9.0":
+  version: 3.9.0
+  resolution: "eslint-plugin-tailwindcss@npm:3.9.0"
+  dependencies:
+    fast-glob: ^3.2.5
+    postcss: ^8.4.4
+  peerDependencies:
+    tailwindcss: ^3.2.2
+  checksum: 6c69d25c649ff15d1e4b53c7d1cf4a631ba22c0d39ec0a2e36b00968e400a654482464830a803bce6828ae37ff5befe1f7a89fe3a243a2959fa4b70a9a8d8c0d
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-turbo@npm:0.0.7":
   version: 0.0.7
   resolution: "eslint-plugin-turbo@npm:0.0.7"
@@ -3318,7 +3331,7 @@ eslint-config-turbo@latest:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.12, fast-glob@npm:^3.2.7, fast-glob@npm:^3.2.9":
+"fast-glob@npm:^3.2.12, fast-glob@npm:^3.2.5, fast-glob@npm:^3.2.7, fast-glob@npm:^3.2.9":
   version: 3.2.12
   resolution: "fast-glob@npm:3.2.12"
   dependencies:
@@ -5277,7 +5290,7 @@ eslint-config-turbo@latest:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.9, postcss@npm:^8.4.21":
+"postcss@npm:^8.0.9, postcss@npm:^8.4.21, postcss@npm:^8.4.4":
   version: 8.4.21
   resolution: "postcss@npm:8.4.21"
   dependencies:

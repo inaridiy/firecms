@@ -14,16 +14,16 @@
 	});
 
 	let overlayClass: string;
-	$: overlayClass = clsx('inset-0 bg-black/20 z-10', {
+	$: overlayClass = clsx('inset-0 z-10 bg-black/20', {
 		hidden: !open,
 		'fixed sm:hidden': open
 	});
 
-	$: itemClass = clsx('w-full rounded-box p-2 font-bold', 'hover:bg-base-200 active:bg-base-200');
+	$: itemClass = clsx('rounded-box w-full p-2 font-bold', 'hover:bg-base-200 active:bg-base-200');
 
 	let sideMenuClass: string;
 	$: sideMenuClass = clsx(
-		'min-h-[100dvh] z-10 bg-base-100 flex-col p-4 border-r w-2/3 sm:w-56',
+		'bg-base-100 z-10 min-h-[100dvh] w-2/3 flex-col border-r p-4 sm:w-56',
 		'fixed sm:static',
 		{
 			'hidden sm:flex': !open,
@@ -37,7 +37,7 @@
 	<nav aria-label="Main Nav" class="flex flex-col mt-2 space-y-1">
 		<a href="/" class={itemClass}>Home</a>
 		<details class="group [&_summary::-webkit-details-marker]:hidden">
-			<summary class={clsx(itemClass, 'cursor-pointer flex')}>Contents</summary>
+			<summary class={clsx(itemClass, 'flex cursor-pointer')}>Contents</summary>
 			<nav class="flex flex-col gap-1 ml-4">
 				{#if $contentTypesQuery.isLoading}
 					<div class={itemClass}>Loading</div>

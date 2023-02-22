@@ -9,8 +9,8 @@
 
 	let buttonClass: string;
 	$: buttonClass = clsx(
-		'inline-flex items-center justify-center rounded-btn',
-		'font-bold duration-btn active:scale-btn-focus',
+		'rounded-btn inline-flex items-center justify-center',
+		'duration-btn active:scale-btn-focus font-bold',
 		{
 			'bg-primary text-primary-content': color === 'primary',
 			'bg-secondary text-secondary-content': color === 'secondary',
