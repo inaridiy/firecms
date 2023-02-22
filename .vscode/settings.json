@@ -12,6 +12,8 @@
     "source.organizeImports": true,
     "source.fixAll.eslint": true
   },
+  "eslint.probe": ["svelte"],
+  "eslint.validate": ["svelte"],
   "eslint.workingDirectories": [{ "mode": "auto" }],
   "[solidity]": {
     "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
