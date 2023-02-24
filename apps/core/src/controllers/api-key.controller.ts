@@ -20,7 +20,7 @@ apiKey.post("/", async (c) => {
 
 apiKey.get("/", async (c) => {
   const apiKeyQueryService = new ApiKeyQueryService({ db: c.env.DB });
-  const [limit, offset] = [c.req.param("limit"), c.req.param("offset")];
+  const { limit, offset } = c.req.query();
   try {
     const apiKeys = await apiKeyQueryService.queryAPIKeys({
       name: c.req.query("name"),

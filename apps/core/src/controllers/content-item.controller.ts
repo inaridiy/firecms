@@ -13,17 +13,17 @@ contentItem.post("/:tableName", async (c) => {
       tableName: c.req.param("tableName"),
       data: await c.req.json(),
     });
-    return c.json(result);
+    return c.jsonT(result);
   } catch (e) {
     console.log(e);
-    return c.json(e, 500);
+    return c.jsonT(e, 500);
   }
 });
 
 contentItem.get("/:tableName", async (c) => {
   const queryService = new ContentItemQueryService({ db: c.env.DB });
 
-  const [limit, offset] = [c.req.query("limit"), c.req.query("offset")];
+  const { limit, offset } = c.req.query();
   try {
     const result = await queryService.queryContentItems({
       tableName: c.req.param("tableName"),
@@ -35,10 +35,10 @@ contentItem.get("/:tableName", async (c) => {
       offset: offset ? parseInt(offset) : undefined,
     });
 
-    return c.json(result);
+    return c.jsonT(result);
   } catch (e) {
     console.log(e);
-    return c.json(e, 500);
+    return c.jsonT(e, 500);
   }
 });
 

@@ -38,7 +38,7 @@ file.put("/", async (c) => {
 file.get("/", async (c) => {
   const fileObjectQueryService = new FileObjectQueryService({ db: c.env.DB });
 
-  const [limit, offset] = [c.req.param("limit"), c.req.param("offset")];
+  const { limit, offset } = c.req.query();
   try {
     const files = await fileObjectQueryService.queryFileObjects({
       type: c.req.query("type"),
@@ -50,7 +50,7 @@ file.get("/", async (c) => {
       limit: limit ? Number(limit) : undefined,
       offset: offset ? Number(offset) : undefined,
     });
-    return c.json(files);
+    return c.jsonT(files);
   } catch (_e) {
     const e = _e as Error;
     return c.json({ ok: false, error: e.message }, 500);

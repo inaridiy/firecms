@@ -11,17 +11,17 @@ contentType.get("/:tableName", async (c) => {
     const contentType = await contentTypeQueryService.queryContentTypes({
       tableName: c.req.param("tableName"),
     });
-    return c.json(contentType[0]);
+    return c.jsonT(contentType[0]);
   } catch (e) {
     console.log(e);
-    return c.json(e, 500);
+    return c.jsonT(e, 500);
   }
 });
 
 contentType.get("/", async (c) => {
   const contentTypeQueryService = new ContentTypeQueryService({ db: c.env.DB });
 
-  const [limit, offset] = [c.req.query("limit"), c.req.query("offset")];
+  const { limit, offset } = c.req.query();
   try {
     const contentTypes = await contentTypeQueryService.queryContentTypes({
       name: c.req.query("name"),
@@ -32,17 +32,17 @@ contentType.get("/", async (c) => {
       limit: limit ? Number(limit) : undefined,
       offset: offset ? Number(offset) : undefined,
     });
-    return c.json(contentTypes);
+    return c.jsonT(contentTypes);
   } catch (e) {
     console.log(e);
-    return c.json(e, 500);
+    return c.jsonT(e, 500);
   }
 });
 
 contentType.post("/", async (c) => {
   const contentTypeService = new ContentTypeService({ db: c.env.DB });
   const result = await contentTypeService.createContentType(await c.req.json());
-  return c.json(result);
+  return c.jsonT(result);
 });
 
 export default contentType;

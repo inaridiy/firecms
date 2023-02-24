@@ -8,8 +8,9 @@ apiCrud.get("/:id", async (c) => {
   const apiCrudService = new ApiCrudService({ db: c.env.DB });
 
   const [apiKey, tableName] = [c.req.header("X-API-Key"), c.req.param("id")];
-  const [limit, offset] = [c.req.query("limit"), c.req.query("offset")];
+  const { limit, offset } = c.req.query();
   try {
+    if (!apiKey) throw new Error("Missing X-API-Key header");
     const contentItems = await apiCrudService.queryContentItem({
       apiKey,
       tableName,
@@ -23,7 +24,7 @@ apiCrud.get("/:id", async (c) => {
       },
     });
 
-    return c.json(contentItems);
+    return c.jsonT(contentItems);
   } catch (_e) {
     const e = _e as Error;
     console.error(e);
@@ -36,12 +37,13 @@ apiCrud.post("/:id", async (c) => {
 
   const [apiKey, tableName] = [c.req.header("X-API-Key"), c.req.param("id")];
   try {
+    if (!apiKey) throw new Error("Missing X-API-Key header");
     const contentItem = await apiCrudService.createContentItem({
       apiKey,
       tableName,
       data: await c.req.json(),
     });
-    return c.json(contentItem);
+    return c.jsonT(contentItem);
   } catch (_e) {
     const e = _e as Error;
     console.error(e);

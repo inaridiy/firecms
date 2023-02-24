@@ -2093,7 +2093,7 @@ __metadata:
   dependencies:
     "@cloudflare/workers-types": ^4.20230115.0
     "@types/jest": 29.4.0
-    hono: ^2.7.5
+    hono: ^3.0.1
     kysely: ^0.23.4
     typescript: ^4.9.4
     wrangler: 2.6.2
@@ -3782,10 +3782,10 @@ eslint-config-turbo@latest:
   languageName: node
   linkType: hard
 
-"hono@npm:^2.7.5":
-  version: 2.7.5
-  resolution: "hono@npm:2.7.5"
-  checksum: f1d0813dba4561516057bbd4ba9e8d55fa5fd9ceb7ba828bee4db226b02a45c1bb01971e0d22c19a00c180f7e36e48d867bb5b3398509f4e33d2ded4ee21c699
+"hono@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "hono@npm:3.0.1"
+  checksum: 0c78ca46548c26cea854153fa8ea0aadfe29bff482a8746c40792724a5d2d1a89a4d98a9d8fdd02cfa6ab4d9bafd4983d8ff32fcf8dd94f986cfbe43b99f033d
   languageName: node
   linkType: hard
 

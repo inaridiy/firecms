@@ -12,7 +12,7 @@ auth.post("/login", async (c) => {
 
   try {
     const { token, id } = await authService.login((await c.req.json()) as any);
-    return c.json({ token, id });
+    return c.jsonT({ token, id });
   } catch (_e) {
     const e = _e as Error;
     console.error(e);
