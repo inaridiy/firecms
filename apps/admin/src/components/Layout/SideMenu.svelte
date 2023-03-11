@@ -1,6 +1,6 @@
 <script lang="ts">
-	import clsx from 'clsx';
 	import { createQuery } from '@tanstack/svelte-query';
+	import clsx from 'clsx';
 	import { fetchContentTypes } from '../../api/content-types';
 	import { isAuthenticated } from '../../auth';
 
@@ -19,7 +19,10 @@
 		'fixed sm:hidden': open
 	});
 
-	$: itemClass = clsx('rounded-box w-full p-2 font-bold', 'hover:bg-base-200 active:bg-base-200');
+	$: itemClass = clsx(
+		'rounded-box w-full p-2 font-bold transition',
+		'hover:bg-base-200 active:bg-base-200'
+	);
 
 	let sideMenuClass: string;
 	$: sideMenuClass = clsx(
