@@ -2,12 +2,14 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import clsx from 'clsx';
 	import { ChevronDown } from 'lucide-svelte';
+	import { slide } from 'svelte/transition';
 	import { fetchContentTypes } from '../../api/content-types';
 	import { isAuthenticated, logout } from '../../auth';
 
 	export let open = false;
-
 	const toggle = () => (open = !open);
+
+	let contentsMenu = false;
 
 	const contentTypesQuery = createQuery({
 		queryKey: ['content-types'],
@@ -40,23 +42,30 @@
 <div class={sideMenuClass}>
 	<nav aria-label="Main Nav" class="flex flex-col mt-2 space-y-1">
 		<a href="/" class={itemClass}>Home</a>
-		<details class="group [&_summary::-webkit-details-marker]:hidden">
-			<summary class={clsx(itemClass, 'cursor-pointer')}>
+		<div class="group [&_summary::-webkit-details-marker]:hidden">
+			<button
+				class={clsx(itemClass, 'cursor-pointer')}
+				on:click={() => (contentsMenu = !contentsMenu)}
+			>
 				Contents
-				<ChevronDown class="group-open:rotate-180 transition" />
-			</summary>
-			<nav class="flex flex-col gap-1 ml-4">
-				{#if $contentTypesQuery.isLoading}
-					{#each [1, 2, 3] as _}
-						<div class={clsx(itemClass, 'bg-base-200 h-8 animate-pulse')} />
-					{/each}
-				{:else if $contentTypesQuery.data}
-					{#each $contentTypesQuery.data as contentType}
-						<a href="/" class={itemClass}>{contentType.name}</a>
-					{/each}
-				{/if}
-			</nav>
-		</details>
+				<ChevronDown class={clsx(' transition', contentsMenu && 'rotate-180')} />
+			</button>
+			{#if contentsMenu}
+				<nav transition:slide={{ duration: 150 }} class="flex flex-col gap-1 ml-4">
+					{#if $contentTypesQuery.isLoading}
+						{#each [1, 2, 3] as _}
+							<div class={clsx(itemClass, 'bg-base-200 h-8 animate-pulse')} />
+						{/each}
+					{:else if $contentTypesQuery.data}
+						{#each $contentTypesQuery.data as contentType}
+							<a href="/" class={itemClass}>
+								{contentType.name}
+							</a>
+						{/each}
+					{/if}
+				</nav>
+			{/if}
+		</div>
 	</nav>
 	<div class="flex-1" />
 	<div class="flex">
