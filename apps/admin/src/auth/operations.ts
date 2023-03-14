@@ -14,10 +14,13 @@ export const login = async (data: LoginData) => {
 		[isEmail(nameOrEmail) ? 'email' : 'user_id']: nameOrEmail,
 		password
 	});
-	console.log('id, token', id, token);
 	authStore.set({ id, token });
 
 	const userData = await fetchUser(id);
-	console.log('userData', userData);
 	userStore.set(userData);
+};
+
+export const logout = () => {
+	authStore.set(undefined);
+	userStore.set(undefined);
 };

@@ -2,7 +2,7 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import clsx from 'clsx';
 	import { fetchContentTypes } from '../../api/content-types';
-	import { isAuthenticated } from '../../auth';
+	import { isAuthenticated, logout } from '../../auth';
 
 	export let open = false;
 
@@ -20,7 +20,7 @@
 	});
 
 	$: itemClass = clsx(
-		'rounded-box w-full p-2 font-bold transition',
+		'rounded-box flex w-full p-2 font-bold transition',
 		'hover:bg-base-200 active:bg-base-200'
 	);
 
@@ -55,7 +55,7 @@
 	<div class="flex-1" />
 	<div class="flex">
 		{#if $isAuthenticated}
-			<a href="/" class={itemClass}>Logout</a>
+			<button class={itemClass} on:click={logout}>Logout</button>
 		{:else}
 			<a href="/login" class={itemClass}>Login</a>
 		{/if}
