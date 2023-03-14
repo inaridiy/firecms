@@ -3,6 +3,7 @@
 
 	export let id: string;
 	export let label = '';
+	export let error = '';
 	export let value: string | number = '';
 	let addContainerClass = '';
 	let addInputClass = '';
@@ -13,7 +14,7 @@
 
 	let inputClass: string;
 	$: inputClass = clsx(
-		'rounded-box border-base-content w-full border-2 p-2 shadow-sm',
+		'rounded-box border-base-content w-full border-2 p-2 shadow-sm outline-none',
 		addInputClass
 	);
 </script>
@@ -22,7 +23,6 @@
 	<label for={id} class="block font-medium text-base-content">{label}</label>
 	<input
 		{...$$restProps}
-		type="text"
 		bind:value
 		on:blur
 		on:change
@@ -39,4 +39,7 @@
 		on:input
 		class={inputClass}
 	/>
+	{#if error}
+		<label for={id} class="block font-medium text-error">{error}</label>
+	{/if}
 </div>

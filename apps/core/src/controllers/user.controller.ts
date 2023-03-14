@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import type { HonoConfig } from "../config";
-import { UserService } from "../services/user.service";
 import { UserQueryService } from "../queries/user.query";
+import { UserService } from "../services/user.service";
 
 const user = new Hono<HonoConfig>();
 
@@ -22,12 +22,12 @@ user.post("/", async (c) => {
   }
 });
 
-user.get("/:name", async (c) => {
+user.get("/:id", async (c) => {
   const userQueryService = new UserQueryService({ db: c.env.DB });
 
   try {
     const users = await userQueryService.queryUsers({
-      name: c.req.param("name"),
+      id: c.req.param("id"),
     });
     return c.json(users[0]);
   } catch (e) {

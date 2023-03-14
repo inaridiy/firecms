@@ -14,7 +14,8 @@ module.exports = {
 				primary: 'var(--color-primary)',
 				'primary-content': 'var(--color-primary-content)',
 				secondary: 'var(--color-secondary)',
-				'secondary-content': 'var(--color-secondary-content)'
+				'secondary-content': 'var(--color-secondary-content)',
+				error: 'var(--color-error)'
 			},
 			borderRadius: {
 				box: 'var(--rounded-box)',

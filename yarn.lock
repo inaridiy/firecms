@@ -484,6 +484,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@felte/common@npm:1.1.4":
+  version: 1.1.4
+  resolution: "@felte/common@npm:1.1.4"
+  checksum: 1531bb6a8aba722874fbd452890d344e29e0f48d9e6c717bdf2fd8f6feddf2a6b5a76f965c8edf3dd0ce22108ddf35c52463659bc7d73c5418404023f9c6c59a
+  languageName: node
+  linkType: hard
+
+"@felte/core@npm:1.3.7":
+  version: 1.3.7
+  resolution: "@felte/core@npm:1.3.7"
+  dependencies:
+    "@felte/common": 1.1.4
+  checksum: 87fdd045edc5419ced4b896bb2d6ddd39592af9cb63cfdd84836c1c8c787d7d9701150b0d8a33eb79929a80f1ac2f78d4fac76e3130941426eabd9cfe3a5a2c5
+  languageName: node
+  linkType: hard
+
 "@gar/promisify@npm:^1.1.3":
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
@@ -1474,6 +1490,7 @@ __metadata:
     eslint-config-prettier: ^8.5.0
     eslint-plugin-svelte3: ^4.0.0
     eslint-plugin-tailwindcss: ^3.9.0
+    felte: ^1.2.7
     postcss: ^8.4.21
     prettier: ^2.8.0
     prettier-plugin-svelte: ^2.8.1
@@ -3364,6 +3381,17 @@ eslint-config-turbo@latest:
   dependencies:
     reusify: ^1.0.4
   checksum: 0170e6bfcd5d57a70412440b8ef600da6de3b2a6c5966aeaf0a852d542daff506a0ee92d6de7679d1de82e644bce69d7a574a6c93f0b03964b5337eed75ada1a
+  languageName: node
+  linkType: hard
+
+"felte@npm:^1.2.7":
+  version: 1.2.7
+  resolution: "felte@npm:1.2.7"
+  dependencies:
+    "@felte/core": 1.3.7
+  peerDependencies:
+    svelte: ^3.31.0
+  checksum: 8bc0d3adc174b55f3c253d8a1359b223656cf49bc38f7d653a3460813df934fd079de9422f12fa164cccd00054bda94ba9848f1091727f70984ece39aaf69fd2
   languageName: node
   linkType: hard
 
