@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createQuery } from '@tanstack/svelte-query';
 	import clsx from 'clsx';
-	import { ChevronDown } from 'lucide-svelte';
+	import { ChevronDown, Home, List } from 'lucide-svelte';
 	import { slide } from 'svelte/transition';
 	import { fetchContentTypes } from '../../api/content-types';
 	import { isAuthenticated, logout } from '../../auth';
@@ -23,7 +23,7 @@
 	});
 
 	$: itemClass = clsx(
-		'rounded-box flex w-full items-center justify-between p-2 font-bold transition',
+		'rounded-box flex w-full items-center gap-2 p-2 font-bold transition',
 		'hover:bg-base-200 active:bg-base-200'
 	);
 
@@ -41,13 +41,16 @@
 <div class={overlayClass} aria-hidden on:click={toggle} />
 <div class={sideMenuClass}>
 	<nav aria-label="Main Nav" class="flex flex-col mt-2 space-y-1">
-		<a href="/" class={itemClass}>Home</a>
+		<a href="/" class={itemClass}><Home /> Home</a>
 		<div class="group [&_summary::-webkit-details-marker]:hidden">
 			<button
 				class={clsx(itemClass, 'cursor-pointer')}
 				on:click={() => (contentsMenu = !contentsMenu)}
 			>
-				Contents
+				<span class="flex-1 flex gap-2">
+					<List />
+					Contents
+				</span>
 				<ChevronDown class={clsx(' transition', contentsMenu && 'rotate-180')} />
 			</button>
 			{#if contentsMenu}
