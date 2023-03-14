@@ -15,7 +15,6 @@ export const login = async (data: LoginData) => {
 		password
 	});
 	authStore.set({ id, token });
-
 	const userData = await fetchUser(id);
 	userStore.set(userData);
 };

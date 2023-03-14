@@ -1491,6 +1491,7 @@ __metadata:
     eslint-plugin-svelte3: ^4.0.0
     eslint-plugin-tailwindcss: ^3.9.0
     felte: ^1.2.7
+    lucide-svelte: ^0.125.0
     postcss: ^8.4.21
     prettier: ^2.8.0
     prettier-plugin-svelte: ^2.8.1
@@ -4497,6 +4498,15 @@ eslint-config-turbo@latest:
   version: 7.14.1
   resolution: "lru-cache@npm:7.14.1"
   checksum: d72c6713c6a6d86836a7a6523b3f1ac6764768cca47ec99341c3e76db06aacd4764620e5e2cda719a36848785a52a70e531822dc2b33fb071fa709683746c104
+  languageName: node
+  linkType: hard
+
+"lucide-svelte@npm:^0.125.0":
+  version: 0.125.0
+  resolution: "lucide-svelte@npm:0.125.0"
+  peerDependencies:
+    svelte: ^3.49.0
+  checksum: 42a9c8b89c2aece67e4ab35041b0d6c0b8daaca9722c8de704ed0d402702044ae08a7f1937d3e4c6aabf5d044fdef7bb07861a5b57c1ce42010cd3c1cf0c8996
   languageName: node
   linkType: hard
 

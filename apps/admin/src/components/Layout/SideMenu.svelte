@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createQuery } from '@tanstack/svelte-query';
 	import clsx from 'clsx';
+	import { ChevronDown } from 'lucide-svelte';
 	import { fetchContentTypes } from '../../api/content-types';
 	import { isAuthenticated, logout } from '../../auth';
 
@@ -20,7 +21,7 @@
 	});
 
 	$: itemClass = clsx(
-		'rounded-box flex w-full p-2 font-bold transition',
+		'rounded-box flex w-full items-center justify-between p-2 font-bold transition',
 		'hover:bg-base-200 active:bg-base-200'
 	);
 
@@ -40,10 +41,15 @@
 	<nav aria-label="Main Nav" class="flex flex-col mt-2 space-y-1">
 		<a href="/" class={itemClass}>Home</a>
 		<details class="group [&_summary::-webkit-details-marker]:hidden">
-			<summary class={clsx(itemClass, 'flex cursor-pointer')}>Contents</summary>
+			<summary class={clsx(itemClass, 'cursor-pointer')}>
+				Contents
+				<ChevronDown class="group-open:rotate-180 transition" />
+			</summary>
 			<nav class="flex flex-col gap-1 ml-4">
 				{#if $contentTypesQuery.isLoading}
-					<div class={itemClass}>Loading</div>
+					{#each [1, 2, 3] as _}
+						<div class={clsx(itemClass, 'bg-base-200 h-8 animate-pulse')} />
+					{/each}
 				{:else if $contentTypesQuery.data}
 					{#each $contentTypesQuery.data as contentType}
 						<a href="/" class={itemClass}>{contentType.name}</a>
