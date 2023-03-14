@@ -1,13 +1,11 @@
 <script lang="ts">
-	import Button from '../Elements/Button.svelte';
 	import SideMenu from './SideMenu.svelte';
 	let open = false;
 </script>
 
-<div class="flex ">
+<div class="flex">
 	<SideMenu bind:open />
-	<main class="flex-1">
-		<Button on:click={() => (open = !open)}>Open</Button>
+	<div class="flex-1 flex flex-col">
 		<slot />
-	</main>
+	</div>
 </div>

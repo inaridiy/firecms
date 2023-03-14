@@ -4,6 +4,9 @@ module.exports = {
 
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ["'Rubik', 'Noto Sans JP', sans-serif", { fontFeatureSettings: '"palt"' }]
+			},
 			colors: {
 				'base-100': 'var(--color-base-100)',
 				'base-200': 'var(--color-base-200)',

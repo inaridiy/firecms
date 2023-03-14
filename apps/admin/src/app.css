@@ -1,6 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;900&family=Rubik:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer {
+	html {
+		font-family: 'Rubik', 'Noto Sans JP', sans-serif;
+	}
+}
 
 :root {
 	--color-base-100: #ffffff;

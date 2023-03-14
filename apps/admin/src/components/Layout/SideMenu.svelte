@@ -4,7 +4,7 @@
 	import { ChevronDown, Home, List } from 'lucide-svelte';
 	import { slide } from 'svelte/transition';
 	import { fetchContentTypes } from '../../api/content-types';
-	import { isAuthenticated, logout } from '../../auth';
+	import { isAuthenticated, logout, userStore } from '../../auth';
 
 	export let open = false;
 	const toggle = () => (open = !open);
@@ -29,7 +29,7 @@
 
 	let sideMenuClass: string;
 	$: sideMenuClass = clsx(
-		'bg-base-100 z-10 min-h-[100dvh] w-2/3 flex-col border-r p-4 sm:w-56',
+		'bg-base-100 z-10 min-h-[100dvh] w-2/3 flex-col border-r sm:w-56',
 		'fixed sm:static',
 		{
 			'hidden sm:flex': !open,
@@ -40,8 +40,18 @@
 
 <div class={overlayClass} aria-hidden on:click={toggle} />
 <div class={sideMenuClass}>
-	<nav aria-label="Main Nav" class="flex flex-col mt-2 space-y-1">
-		<a href="/" class={itemClass}><Home /> Home</a>
+	<div class="h-16 border-b flex items-center px-6 gap-2">
+		<img
+			alt=""
+			class="h-10 w-10 rounded-full"
+			src="https://pbs.twimg.com/profile_images/1534222359271723009/h-OK92Rp_400x400.jpg"
+		/>
+		<di class="text-lg font-bold">
+			{$userStore?.name}
+		</di>
+	</div>
+	<nav aria-label="Main Nav" class="flex flex-col space-y-1 p-4">
+		<a href="/" class={itemClass}><Home />Home</a>
 		<div class="group [&_summary::-webkit-details-marker]:hidden">
 			<button
 				class={clsx(itemClass, 'cursor-pointer')}
@@ -54,7 +64,7 @@
 				<ChevronDown class={clsx(' transition', contentsMenu && 'rotate-180')} />
 			</button>
 			{#if contentsMenu}
-				<nav transition:slide={{ duration: 150 }} class="flex flex-col gap-1 ml-4">
+				<nav transition:slide={{ duration: 150 }} class="flex flex-col gap-1 ml-6">
 					{#if $contentTypesQuery.isLoading}
 						{#each [1, 2, 3] as _}
 							<div class={clsx(itemClass, 'bg-base-200 h-8 animate-pulse')} />
@@ -71,7 +81,7 @@
 		</div>
 	</nav>
 	<div class="flex-1" />
-	<div class="flex">
+	<div class="flex p-4">
 		{#if $isAuthenticated}
 			<button class={itemClass} on:click={logout}>Logout</button>
 		{:else}
