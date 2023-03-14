@@ -1,9 +1,10 @@
-import { writable, readable } from 'svelte/store';
+import { storable } from '$lib/utils/storable';
+import { readable } from 'svelte/store';
 import type { AuthData, UserData } from './models';
 
-export const authStore = writable<AuthData | undefined>();
+export const authStore = storable<string, AuthData | undefined>('auth');
 
-export const userStore = writable<UserData | undefined>();
+export const userStore = storable<string, UserData | undefined>('user');
 
 export const isAuthenticated = readable<boolean>(false, (set) => {
 	const unsubscribe = authStore.subscribe((auth) => {
