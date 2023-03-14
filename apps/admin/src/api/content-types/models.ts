@@ -1,3 +1,12 @@
+export interface ContentTypesRes {
+	id: string;
+	name?: string;
+	table_name: string;
+	schema: string;
+	created_at: string;
+	updated_at: string;
+}
+
 export type ContentFieldTypes =
 	| 'string'
 	| 'int'

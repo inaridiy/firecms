@@ -71,7 +71,7 @@
 						{/each}
 					{:else if $contentTypesQuery.data}
 						{#each $contentTypesQuery.data as contentType}
-							<a href="/" class={itemClass}>
+							<a href={`/contents/${contentType.tableName}`} class={itemClass}>
 								{contentType.name}
 							</a>
 						{/each}
