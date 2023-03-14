@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { fetchContentTypes } from '$lib/api/content-types';
 	import { createQuery } from '@tanstack/svelte-query';
 	import clsx from 'clsx';
 	import { ChevronDown, Home, List } from 'lucide-svelte';
 	import { slide } from 'svelte/transition';
-	import { fetchContentTypes } from '../../api/content-types';
 	import { isAuthenticated, logout, userStore } from '../../auth';
 
 	export let open = false;

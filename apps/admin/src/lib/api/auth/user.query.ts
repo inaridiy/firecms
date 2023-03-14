@@ -1,5 +1,5 @@
 import { client } from '$lib/axios';
-import type { UserData } from '../../auth/models';
+import type { UserData } from '../../../auth/models';
 
 export interface UserRes {
 	id: string;

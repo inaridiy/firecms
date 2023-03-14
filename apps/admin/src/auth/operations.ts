@@ -1,5 +1,5 @@
 import { isEmail } from '$lib/utils';
-import { fetchUser, postLogin } from '../api/auth';
+import { fetchUser, postLogin } from '../lib/api/auth';
 import { authStore, userStore } from './stores';
 
 export interface LoginData {

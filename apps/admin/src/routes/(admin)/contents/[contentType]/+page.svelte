@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { fetchContentType, type ContentType } from '$lib/api/content-types';
 	import { createQuery, type CreateQueryResult } from '@tanstack/svelte-query';
-	import type { ContentType } from 'src/api/content-types/models';
-	import { fetchContentType } from '../../../../api/content-types';
 	import Header from '../../../../components/Layout/Header.svelte';
 
 	let contentTypeQuery: CreateQueryResult<ContentType | undefined>;
