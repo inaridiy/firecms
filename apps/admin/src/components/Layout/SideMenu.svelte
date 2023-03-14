@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { fetchContentTypes } from '$lib/api/content-types';
+	import { isSideMenuOpen } from '$lib/misc';
 	import { createQuery } from '@tanstack/svelte-query';
 	import clsx from 'clsx';
 	import { ChevronDown, Home, List } from 'lucide-svelte';
 	import { slide } from 'svelte/transition';
 	import { isAuthenticated, logout, userStore } from '../../auth';
-
-	export let open = false;
-	const toggle = () => (open = !open);
 
 	let contentsMenu = false;
 
@@ -18,8 +16,8 @@
 
 	let overlayClass: string;
 	$: overlayClass = clsx('inset-0 z-10 bg-black/20', {
-		hidden: !open,
-		'fixed sm:hidden': open
+		hidden: !$isSideMenuOpen,
+		'fixed sm:hidden': $isSideMenuOpen
 	});
 
 	$: itemClass = clsx(
@@ -32,13 +30,13 @@
 		'bg-base-100 z-10 min-h-[100dvh] w-2/3 flex-col border-r sm:w-56',
 		'fixed sm:static',
 		{
-			'hidden sm:flex': !open,
-			flex: open
+			'hidden sm:flex': !$isSideMenuOpen,
+			flex: $isAuthenticated
 		}
 	);
 </script>
 
-<div class={overlayClass} aria-hidden on:click={toggle} />
+<div class={overlayClass} aria-hidden on:click={() => ($isSideMenuOpen = !$isSideMenuOpen)} />
 <div class={sideMenuClass}>
 	<div class="h-16 border-b flex items-center px-6 gap-2">
 		<img
