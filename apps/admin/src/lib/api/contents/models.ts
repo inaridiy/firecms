@@ -37,3 +37,17 @@ export interface ContentType {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export type ContentRes = {
+	id: string;
+	[name: string]: any | ContentRes;
+	created_at: Date;
+	updated_at: Date;
+};
+
+export type Content = {
+	id: string;
+	[name: string]: any | Content | Content[];
+	createdAt: Date;
+	updatedAt: Date;
+};
