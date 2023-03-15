@@ -91,8 +91,8 @@ export class ContentItemQueryService {
           .select([
             `${refTo}.id as ${relationIdName(refTo)}`,
             ...refTableSelects,
-            `${refTo}.created_at as ${refTo}_created_at`,
-            `${refTo}.updated_at as ${refTo}_updated_at`,
+            `${refTo}.created_at as ${toS(refTo)}_created_at`,
+            `${refTo}.updated_at as ${toS(refTo)}_updated_at`,
           ]);
       else
         query = query
@@ -104,8 +104,8 @@ export class ContentItemQueryService {
           .select([
             `${refTo}.id as ${relationIdName(refTo)}`,
             ...refTableSelects,
-            `${refTo}.created_at as ${refTo}_created_at`,
-            `${refTo}.updated_at as ${refTo}_updated_at`,
+            `${refTo}.created_at as ${toS(refTo)}_created_at`,
+            `${refTo}.updated_at as ${toS(refTo)}_updated_at`,
           ]);
     }
 
@@ -171,8 +171,8 @@ export class ContentItemQueryService {
           .map((k) => `${toS(refTo)}_${k}`)
           .concat(
             relationIdName(refTo),
-            `${refTo}_created_at`,
-            `${refTo}_updated_at`
+            `${toS(refTo)}_created_at`,
+            `${toS(refTo)}_updated_at`
           );
 
         allRefKeys = [...allRefKeys, ...refKeys];
