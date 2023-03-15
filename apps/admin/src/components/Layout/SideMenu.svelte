@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fetchContentTypes } from '$lib/api/content-types';
+	import { fetchContentTypes } from '$lib/api/contents';
 	import { isSideMenuOpen } from '$lib/misc';
 	import { createQuery } from '@tanstack/svelte-query';
 	import clsx from 'clsx';

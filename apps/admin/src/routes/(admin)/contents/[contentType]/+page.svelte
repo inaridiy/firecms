@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { fetchContentType, type ContentType } from '$lib/api/content-types';
+	import { fetchContentType, type ContentType } from '$lib/api/contents';
 	import { createQuery, type CreateQueryResult } from '@tanstack/svelte-query';
 	import { Plus, Search } from 'lucide-svelte';
 	import Button from '../../../../components/Elements/Button.svelte';
