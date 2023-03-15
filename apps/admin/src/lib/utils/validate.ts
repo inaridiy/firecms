@@ -5,3 +5,7 @@ export const isEmail = (email: string) => {
 export const isValidPassword = (password: string) => {
 	return password.length >= 8;
 };
+
+export const isDate = (date: Date) => {
+	return date instanceof Date && !isNaN(date.getTime());
+};
