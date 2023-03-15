@@ -1,12 +1,12 @@
-import { singularize as toS } from "../utils/inflection";
 import { Kysely } from "kysely";
 import { D1Kysely } from "../database/d1-kysely";
 import { ContentTypeRepository } from "../repositories/content-type.repository";
 import { relationIdName, relationTableName } from "../utils/createKeyName";
+import { singularize as toS } from "../utils/inflection";
 import {
-  parseFilters,
   ALLOWED_FILTERS,
   FILTER_SQL_OPERATORS,
+  parseFilters,
 } from "../utils/parseFilters";
 import { parseOrders } from "../utils/parseOrders";
 
@@ -58,7 +58,12 @@ export class ContentItemQueryService {
 
     let query = this.db
       .selectFrom(data.tableName)
-      .select([`${tableName}.id`, ...mainTableSelects]);
+      .select([
+        `${tableName}.id`,
+        `${tableName}.created_at`,
+        `${tableName}.updated_at`,
+        ...mainTableSelects,
+      ]);
 
     for (const column of Object.keys(schema)) {
       if (!REF_COLUMN_TYPES.includes(schema[column].type)) continue;
@@ -86,6 +91,8 @@ export class ContentItemQueryService {
           .select([
             `${refTo}.id as ${relationIdName(refTo)}`,
             ...refTableSelects,
+            `${refTo}.created_at as ${refTo}_created_at`,
+            `${refTo}.updated_at as ${refTo}_updated_at`,
           ]);
       else
         query = query
@@ -97,6 +104,8 @@ export class ContentItemQueryService {
           .select([
             `${refTo}.id as ${relationIdName(refTo)}`,
             ...refTableSelects,
+            `${refTo}.created_at as ${refTo}_created_at`,
+            `${refTo}.updated_at as ${refTo}_updated_at`,
           ]);
     }
 
@@ -160,7 +169,12 @@ export class ContentItemQueryService {
         const refKeys = Object.keys(refSchema)
           .filter((s) => !REF_COLUMN_TYPES.includes(refSchema[s].type))
           .map((k) => `${toS(refTo)}_${k}`)
-          .concat(relationIdName(refTo));
+          .concat(
+            relationIdName(refTo),
+            `${refTo}_created_at`,
+            `${refTo}_updated_at`
+          );
+
         allRefKeys = [...allRefKeys, ...refKeys];
 
         for (const item of items) {
