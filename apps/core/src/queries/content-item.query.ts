@@ -126,7 +126,7 @@ export class ContentItemQueryService {
     if (data.orders) {
       const orders = parseOrders(data.orders);
       for (const order of orders)
-        query = query.orderBy(order.field, order.direction);
+        query = query.orderBy(`${tableName}.${order.field}`, order.direction);
     }
 
     if (data.filters) {
@@ -136,8 +136,13 @@ export class ContentItemQueryService {
         const column = schema[field];
         if (!column) throw new Error("invalid_field");
         if (operator === "contain")
-          query = query.where(field, "like", `%${value}%`);
-        else query = query.where(field, FILTER_SQL_OPERATORS[operator], value);
+          query = query.where(`${tableName}.${field}`, "like", `%${value}%`);
+        else
+          query = query.where(
+            `${tableName}.${field}`,
+            FILTER_SQL_OPERATORS[operator],
+            value
+          );
       }
     }
 

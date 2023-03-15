@@ -20,3 +20,12 @@ export const toContent = (res: ContentRes): Content => {
 		updatedAt: new Date(updated_at)
 	};
 };
+
+export const toQueryColumn = (column: string): string => {
+	return (
+		{
+			createdAt: 'created_at',
+			updatedAt: 'updated_at'
+		}[column] || column
+	);
+};

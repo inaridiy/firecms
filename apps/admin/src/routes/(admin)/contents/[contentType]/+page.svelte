@@ -15,6 +15,8 @@
 
 	let search = '';
 
+	let order = { column: 'createdAt', direction: 'desc' };
+
 	let contentTypesQuery: CreateQueryResult<ContentType | undefined>;
 	$: contentTypesQuery = createQuery({
 		queryKey: ['content-type', $page.params.contentType],
@@ -24,7 +26,7 @@
 	let contentItemsQuery: CreateQueryResult<Content[]>;
 	$: contentItemsQuery = createQuery({
 		queryKey: ['content-items', $page.params.contentType, { search }],
-		queryFn: () => fetchContentItems($page.params.contentType, { q: search })
+		queryFn: () => fetchContentItems($page.params.contentType, { q: search, orders: [order] })
 	});
 </script>
 
@@ -43,5 +45,9 @@
 {:else if $contentItemsQuery.isError}
 	<div class="p-4">Error: {$contentItemsQuery.error}</div>
 {:else}
-	<ContentsTableView contentType={$contentTypesQuery.data} contents={$contentItemsQuery.data} />
+	<ContentsTableView
+		bind:order
+		contentType={$contentTypesQuery.data}
+		contents={$contentItemsQuery.data}
+	/>
 {/if}
