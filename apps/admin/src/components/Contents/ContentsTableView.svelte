@@ -19,7 +19,7 @@
 		<thead class="text-lg uppercase border-b">
 			<tr>
 				{#each contentColumns as column}
-					<th scope="col" class="px-4 sm:px-6 py-3">
+					<th scope="col" class="px-4 lg:px-6 py-3">
 						{contentType?.schema[column]?.name || column}
 					</th>
 				{/each}

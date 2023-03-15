@@ -18,15 +18,13 @@
 	let contentTypesQuery: CreateQueryResult<ContentType | undefined>;
 	$: contentTypesQuery = createQuery({
 		queryKey: ['content-type', $page.params.contentType],
-		queryFn: () => fetchContentType($page.params.contentType),
-		enabled: !!$page.params.contentType
+		queryFn: () => fetchContentType($page.params.contentType)
 	});
 
 	let contentItemsQuery: CreateQueryResult<Content[]>;
 	$: contentItemsQuery = createQuery({
 		queryKey: ['content-items', $page.params.contentType, { search }],
-		queryFn: () => fetchContentItems($page.params.contentType, { q: search }),
-		enabled: !!$page.params.contentType
+		queryFn: () => fetchContentItems($page.params.contentType, { q: search })
 	});
 </script>
 
