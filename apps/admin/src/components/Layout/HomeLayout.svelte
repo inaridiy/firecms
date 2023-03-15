@@ -1,10 +1,9 @@
 <script lang="ts">
 	import SideMenu from './SideMenu.svelte';
-	let open = false;
 </script>
 
 <div class="flex">
-	<SideMenu bind:open />
+	<SideMenu />
 	<div class="flex-1 flex flex-col">
 		<slot />
 	</div>

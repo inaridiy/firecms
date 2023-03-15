@@ -1,6 +1,9 @@
 <script>
 	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+	import { onMount } from 'svelte';
+	import { authStore } from '../auth';
 
 	import '../app.css';
 
@@ -10,6 +13,10 @@
 				enabled: browser
 			}
 		}
+	});
+
+	onMount(() => {
+		if (browser && !$authStore) goto('/login');
 	});
 </script>
 
