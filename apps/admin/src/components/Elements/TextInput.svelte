@@ -32,7 +32,7 @@
 			on:mouseleave
 			on:paste
 			on:input
-			class="outline-none"
+			class="outline-none w-full"
 		/>
 	</div>
 	{#if error}

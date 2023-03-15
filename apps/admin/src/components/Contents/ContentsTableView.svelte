@@ -1,12 +1,14 @@
 <script lang="ts">
 	import type { Content, ContentType } from '$lib/api/contents';
 	import { isDate } from '$lib/utils';
+	import clsx from 'clsx';
 	import { ChevronDown, ChevronsUpDown, ChevronUp } from 'lucide-svelte';
 
 	export let excludedColumns: string[] = ['id'];
 	export let contentType: ContentType | undefined;
 	export let contents: Content[];
 	export let order = { column: 'createdAt', direction: 'desc' };
+	export let containerClass = '';
 
 	const setOrder = (column: string) => {
 		if (order.column === column) {
@@ -23,7 +25,7 @@
 		.concat('createdAt', 'updatedAt');
 </script>
 
-<div class="relative overflow-x-auto w-full px-4">
+<div class={clsx('relative w-full overflow-x-auto', containerClass)}>
 	<table class="w-full text-left">
 		<thead class="text-lg uppercase border-b">
 			<tr>

@@ -8,6 +8,7 @@
 	} from '$lib/api/contents';
 	import { createQuery, type CreateQueryResult } from '@tanstack/svelte-query';
 	import { Plus, Search } from 'lucide-svelte';
+	import ContentsTableSkelton from '../../../../components/Contents/ContentsTableSkelton.svelte';
 	import ContentsTableView from '../../../../components/Contents/ContentsTableView.svelte';
 	import Button from '../../../../components/Elements/Button.svelte';
 	import TextInput from '../../../../components/Elements/TextInput.svelte';
@@ -35,19 +36,22 @@
 	<TextInput containerClass="max-w-sm" bind:value={search}>
 		<Search slot="left" />
 	</TextInput>
-	<Button>
+	<Button href={`/contents/${$page.params.contentType}/create`}>
 		<Plus slot="left" />
 		Add
 	</Button>
 </div>
-{#if !$contentItemsQuery.data || $contentTypesQuery.isLoading}
-	<div class="p-4">Loading...</div>
-{:else if $contentItemsQuery.isError}
-	<div class="p-4">Error: {$contentItemsQuery.error}</div>
-{:else}
-	<ContentsTableView
-		bind:order
-		contentType={$contentTypesQuery.data}
-		contents={$contentItemsQuery.data}
-	/>
-{/if}
+
+<div class="px-4">
+	{#if !$contentItemsQuery.data || $contentTypesQuery.isLoading}
+		<ContentsTableSkelton />
+	{:else if $contentItemsQuery.isError}
+		<div class="p-4">Error: {$contentItemsQuery.error}</div>
+	{:else}
+		<ContentsTableView
+			bind:order
+			contentType={$contentTypesQuery.data}
+			contents={$contentItemsQuery.data}
+		/>
+	{/if}
+</div>
