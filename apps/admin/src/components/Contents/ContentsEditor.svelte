@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { ContentType } from '$lib/api/contents';
-	import PlainTextEditor from '../Editors/PlainTextEditor.svelte';
+	import { TestEditor } from 'editor';
 	import NumInput from '../Elements/NumInput.svelte';
 	import TextInput from '../Elements/TextInput.svelte';
 
 	export let contentType: ContentType;
 </script>
 
-<PlainTextEditor />
+<TestEditor containerClass="editor-style" />
 
 <form class="flex flex-col gap-4">
 	{#each Object.entries(contentType.schema) as [key, field]}

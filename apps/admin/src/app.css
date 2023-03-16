@@ -10,6 +10,15 @@
 	}
 }
 
+.editor-style {
+	& h1 {
+		@apply text-3xl font-bold;
+	}
+	& h2 {
+		@apply text-2xl font-bold;
+	}
+}
+
 :root {
 	--color-base-100: #ffffff;
 	--color-base-200: #f2f2f2;

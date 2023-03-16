@@ -20,5 +20,13 @@
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
 		"svelte": "^3.57.0"
+	},
+	"dependencies": {
+		"@lexical/history": "^0.9.0",
+		"@lexical/markdown": "^0.9.0",
+		"@lexical/plain-text": "^0.9.0",
+		"@lexical/rich-text": "^0.9.0",
+		"clsx": "^1.2.1",
+		"lexical": "^0.9.0"
 	}
 }

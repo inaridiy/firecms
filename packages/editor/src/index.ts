@@ -1,2 +1,2 @@
-export const version = '0.0.1';
-export { default as Editor } from './components/Test.svelte';
+export { default as PlainTextEditor } from './components/PlainTextEditor.svelte';
+export { default as TestEditor } from './components/TestEditor.svelte';
