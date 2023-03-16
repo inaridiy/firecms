@@ -1,10 +1,9 @@
 <script context="module">
-	import { createEmptyHistoryState, registerHistory } from '@lexical/history';
-	import { registerMarkdownShortcuts, TRANSFORMERS } from '@lexical/markdown';
-
 	import { CodeHighlightNode, CodeNode } from '@lexical/code';
+	import { createEmptyHistoryState, registerHistory } from '@lexical/history';
 	import { AutoLinkNode, LinkNode } from '@lexical/link';
 	import { ListItemNode, ListNode } from '@lexical/list';
+	import { registerMarkdownShortcuts, TRANSFORMERS } from '@lexical/markdown';
 	import {
 		$createHeadingNode as createHeadingNode,
 		HeadingNode,
