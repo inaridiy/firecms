@@ -12,16 +12,23 @@
     "source.organizeImports": true,
     "source.fixAll.eslint": true
   },
-  "eslint.probe": ["svelte"],
-  "eslint.validate": ["svelte"],
-  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.probe": [
+    "svelte"
+  ],
+  "eslint.validate": [
+    "svelte"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
   "[solidity]": {
     "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
   },
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -41,5 +48,8 @@
     "**/coverage/**": true,
     "**/node_modules/**": true,
     "**/dist/**": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
