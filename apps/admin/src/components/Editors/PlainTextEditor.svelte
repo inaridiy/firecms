@@ -16,6 +16,6 @@
 <div
 	id="editor"
 	contenteditable="true"
-	class="p-4 border-2 border-base-content rounded-box"
+	class="p-2 border-2 border-base-content rounded-box"
 	bind:this={editor_dom}
 />
