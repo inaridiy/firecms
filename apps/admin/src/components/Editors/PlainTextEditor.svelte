@@ -1,0 +1,21 @@
+<script context="module">
+	import { registerPlainText } from '@lexical/plain-text';
+	import { createEditor } from 'lexical';
+	import { onMount } from 'svelte';
+</script>
+
+<script lang="ts">
+	let editor_dom: HTMLElement;
+	onMount(() => {
+		const editor = createEditor();
+		editor.setRootElement(editor_dom);
+		registerPlainText(editor);
+	});
+</script>
+
+<div
+	id="editor"
+	contenteditable="true"
+	class="p-4 border-2 border-base-content rounded-box"
+	bind:this={editor_dom}
+/>
