@@ -21,6 +21,7 @@
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -31,8 +32,8 @@
     "**/.classpath": true,
     "**/.project": true,
     "**/.settings": true,
-    "**/.factorypath": true,
-    "**/node_modules": true
+    "**/.factorypath": true
+    //  "**/node_modules": true
   },
   "files.watcherExclude": {
     "**/__generated__/**": true,

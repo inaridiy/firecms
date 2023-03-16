@@ -14,7 +14,8 @@
 			"$lib": ["src/lib"],
 			"$lib/*": ["src/lib/*"]
 		}
-	}
+	},
+	"exclude": ["node_modules"]
 
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//

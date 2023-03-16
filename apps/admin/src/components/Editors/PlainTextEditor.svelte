@@ -1,5 +1,6 @@
 <script context="module">
 	import { registerPlainText } from '@lexical/plain-text';
+	import { Editor } from 'editor';
 	import { createEditor } from 'lexical';
 	import { onMount } from 'svelte';
 </script>
@@ -13,6 +14,7 @@
 	});
 </script>
 
+<Editor />
 <div
 	id="editor"
 	contenteditable="true"

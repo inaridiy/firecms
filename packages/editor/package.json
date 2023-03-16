@@ -1,0 +1,23 @@
+{
+	"name": "editor",
+	"version": "0.0.0",
+	"description": "Styles and components for use in svelte websites",
+	"type": "module",
+	"module": "src/index.ts",
+	"svelte": "src/index.ts",
+	"license": "MIT",
+	"scripts": {
+		"lint": "prettier --check --ignore-path=../../.prettierignore . && eslint \".\"",
+		"format": "prettier --write --ignore-path=../../.prettierignore ."
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@typescript-eslint/parser": "^5.45.0",
+		"eslint": "^8.28.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-svelte3": "^4.0.0",
+		"prettier": "^2.8.0",
+		"prettier-plugin-svelte": "^2.8.1",
+		"svelte": "^3.57.0"
+	}
+}
