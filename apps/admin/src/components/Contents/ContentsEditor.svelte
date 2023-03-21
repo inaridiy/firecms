@@ -7,7 +7,6 @@
 	export let contentType: ContentType;
 
 	let test = false;
-	$: console.log(test);
 </script>
 
 <Modal bind:open={test} class="h-72" />
