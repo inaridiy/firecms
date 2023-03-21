@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import { fetchContentType, type ContentType } from '$lib/api/contents';
 	import { createQuery, type CreateQueryResult } from '@tanstack/svelte-query';
-	import ContentsEditor from '../../../../../components/Contents/ContentsEditor.svelte';
+	import { ContentsEditor } from '../../../../../components/Contents';
 	import Header from '../../../../../components/Layout/Header.svelte';
 
 	let contentTypesQuery: CreateQueryResult<ContentType | undefined>;

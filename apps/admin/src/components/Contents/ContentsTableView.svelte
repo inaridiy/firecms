@@ -61,13 +61,19 @@
 						{#if contentType?.schema[column]?.type === 'reference-to-many'}
 							<td class="px-4 py-2 lg:px-6 lg:py-4">{`${content[column].length} ${column}`}</td>
 						{:else if contentType?.schema[column]?.type === 'reference-to-one'}
-							<td class="px-4 py-2 lg:px-6 lg:py-4">{content[column].id} </td>
+							<td
+								class="px-4 py-2 lg:px-6 lg:py-4 text-ellipsis whitespace-nowrap max-w-[8rem] overflow-hidden"
+								>{content[column].id}
+							</td>
 						{:else if isDate(content[column])}
 							<td class="px-4 py-2 lg:px-6 lg:py-4">
 								{content[column].toLocaleDateString()}
 							</td>
 						{:else}
-							<td class="whitespace-nowrap px-4 py-2 lg:px-6 lg:py-4">{content[column]}</td>
+							<td
+								class="whitespace-nowrap px-4 py-2 lg:px-6 lg:py-4 ext-ellipsis max-w-[12rem] overflow-hidden"
+								>{content[column]}</td
+							>
 						{/if}
 					{/each}
 				</tr>

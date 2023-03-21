@@ -7,6 +7,9 @@ module.exports = {
 			fontFamily: {
 				sans: ["'Rubik', 'Noto Sans JP', sans-serif", { fontFeatureSettings: '"palt"' }]
 			},
+			height: {
+				screen: '100dvh'
+			},
 			colors: {
 				'base-100': 'var(--color-base-100)',
 				'base-200': 'var(--color-base-200)',
@@ -22,7 +25,8 @@ module.exports = {
 			},
 			borderRadius: {
 				box: 'var(--rounded-box)',
-				btn: 'var(--rounded-btn)'
+				btn: 'var(--rounded-btn)',
+				modal: 'var(--rounded-modal)'
 			},
 			borderWidth: {
 				box: 'var(--border-box)',

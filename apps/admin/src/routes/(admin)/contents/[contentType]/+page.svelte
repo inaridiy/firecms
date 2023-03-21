@@ -8,14 +8,12 @@
 	} from '$lib/api/contents';
 	import { createQuery, type CreateQueryResult } from '@tanstack/svelte-query';
 	import { Plus, Search } from 'lucide-svelte';
-	import ContentsTableSkelton from '../../../../components/Contents/ContentsTableSkelton.svelte';
-	import ContentsTableView from '../../../../components/Contents/ContentsTableView.svelte';
-	import Button from '../../../../components/Elements/Button.svelte';
-	import TextInput from '../../../../components/Elements/TextInput.svelte';
+	import { ContentsTableSkelton, ContentsTableView } from '../../../../components/Contents';
+	import { TextInput } from '../../../../components/EditorInputs';
+	import { Button } from '../../../../components/Elements';
 	import Header from '../../../../components/Layout/Header.svelte';
 
 	let search = '';
-
 	let order = { column: 'createdAt', direction: 'desc' };
 
 	let contentTypesQuery: CreateQueryResult<ContentType | undefined>;
@@ -32,7 +30,7 @@
 </script>
 
 <Header title={$contentTypesQuery.data?.name || 'Unknown'} loading={$contentTypesQuery.isLoading} />
-<div class="p-4 flex gap-4 justify-between">
+<div class="p-4 flex gap-4 justify-between items-center">
 	<TextInput containerClass="max-w-sm" bind:value={search}>
 		<Search slot="left" />
 	</TextInput>

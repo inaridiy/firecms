@@ -1,2 +1,2 @@
-export * as Button from './Button.svelte';
-export * as TextInput from './TextInput.svelte';
+export { default as Button } from './Button.svelte';
+export { default as Modal } from './Modal.svelte';
