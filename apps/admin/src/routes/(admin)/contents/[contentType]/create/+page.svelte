@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { fetchContentType, type ContentType } from '$lib/api/contents';
-	import { createQuery, type CreateQueryResult } from '@tanstack/svelte-query';
+	import { fetchContentType } from '$lib/api/contents';
+	import { createQuery } from '@tanstack/svelte-query';
 	import { ContentsEditor } from '../../../../../components/Contents';
 	import Header from '../../../../../components/Layout/Header.svelte';
 
-	let contentTypesQuery: CreateQueryResult<ContentType | undefined>;
 	$: contentTypesQuery = createQuery({
 		queryKey: ['content-type', $page.params.contentType],
 		queryFn: () => fetchContentType($page.params.contentType)

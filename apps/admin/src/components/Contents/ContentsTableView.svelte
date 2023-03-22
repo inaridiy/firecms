@@ -3,12 +3,15 @@
 	import { isDate } from '$lib/utils';
 	import clsx from 'clsx';
 	import { ChevronDown, ChevronsUpDown, ChevronUp } from 'lucide-svelte';
+	import { createEventDispatcher } from 'svelte';
 
 	export let excludedColumns: string[] = ['id'];
 	export let contentType: ContentType | undefined;
 	export let contents: Content[];
 	export let order = { column: 'createdAt', direction: 'desc' };
 	export let containerClass = '';
+
+	const dispatch = createEventDispatcher<{ select: Content }>();
 
 	const setOrder = (column: string) => {
 		if (order.column === column) {
@@ -19,7 +22,10 @@
 		}
 	};
 
-	let contentColumns: string[] = [];
+	const handleContentClick = (content: Content) => {
+		dispatch('select', content);
+	};
+
 	$: contentColumns = Object.keys(contentType?.schema || {})
 		.filter((column) => !excludedColumns.includes(column))
 		.concat('createdAt', 'updatedAt');
@@ -56,14 +62,17 @@
 		</thead>
 		<tbody>
 			{#each contents as content, index (content.id)}
-				<tr class="text-sm sm:text-base hover:bg-base-200">
+				<tr
+					class="text-sm sm:text-base hover:bg-base-200 cursor-pointer"
+					on:click={() => handleContentClick(content)}
+				>
 					{#each contentColumns as column}
 						{#if contentType?.schema[column]?.type === 'reference-to-many'}
 							<td class="px-4 py-2 lg:px-6 lg:py-4">{`${content[column].length} ${column}`}</td>
 						{:else if contentType?.schema[column]?.type === 'reference-to-one'}
 							<td
 								class="px-4 py-2 lg:px-6 lg:py-4 text-ellipsis whitespace-nowrap max-w-[8rem] overflow-hidden"
-								>{content[column].id}
+								>{content[column]?.id}
 							</td>
 						{:else if isDate(content[column])}
 							<td class="px-4 py-2 lg:px-6 lg:py-4">

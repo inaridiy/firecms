@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { ContentType } from '$lib/api/contents';
 	import { NumInput, TextInput } from '../EditorInputs';
+	import RefToOneInput from '../EditorInputs/RefToOneInput.svelte';
 	import { Button } from '../Elements';
 	import Modal from '../Elements/Modal.svelte';
 
@@ -18,12 +19,14 @@
 
 <form class="flex flex-col gap-4 p-2 mx-auto max-w-screen-lg">
 	{#each Object.entries(contentType.schema) as [key, field]}
-		<div>
+		<div class="flex flex-col">
 			<label for={field.name || key} class="text-lg font-bold">{field.name || key}</label>
 			{#if field.type === 'string'}
 				<TextInput type="text" name={field.name || key} />
 			{:else if field.type === 'int'}
 				<NumInput name={field.name || key} />
+			{:else if field.type === 'reference-to-one'}
+				<RefToOneInput referenceTo={field.referenceTo} />
 			{:else}
 				<p>Unknown field type: {field.type}</p>
 			{/if}

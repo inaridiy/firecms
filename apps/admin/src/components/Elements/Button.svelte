@@ -15,7 +15,7 @@
 			'bg-primary text-primary-content': color === 'primary',
 			'bg-secondary text-secondary-content': color === 'secondary',
 			'bg-neutral text-neutral-content hover': color === 'normal',
-			'border-btn border-neutral hover:bg-neutral hover:text-neutral-content': color === 'outline',
+			'border-2 border-neutral hover:bg-neutral hover:text-neutral-content': color === 'outline',
 			'bg-transparent text-base-content hover:bg-black/10': color === 'ghost',
 			'px-4 py-2 text-sm': size === 'sm',
 			'px-4 py-3 text-base': size === 'normal',

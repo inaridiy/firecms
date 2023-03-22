@@ -3,8 +3,8 @@
 	import { isEmail } from '$lib/utils';
 	import { createForm } from 'felte';
 	import { login } from '../../../auth';
-	import Button from '../../../components/Elements/Button.svelte';
-	import TextInput from '../../../components/Elements/TextInput.svelte';
+	import { TextInput } from '../../../components/EditorInputs';
+	import { Button } from '../../../components/Elements';
 
 	const { form, errors, data } = createForm({
 		validate: (values) => {

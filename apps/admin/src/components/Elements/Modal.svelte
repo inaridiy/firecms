@@ -8,7 +8,7 @@
 
 	let containerName: string;
 	$: containerName = clsx(
-		'bg-base-100 rounded-t-modal sm:rounded-modal z-10 min-h-[60%] w-full max-w-screen-sm sm:min-h-0',
+		'bg-base-100 rounded-t-modal sm:rounded-modal z-10 min-h-[60%] w-full max-w-screen-sm overflow-hidden sm:min-h-[50%]',
 		className
 	);
 
