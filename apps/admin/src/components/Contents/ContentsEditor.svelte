@@ -1,12 +1,21 @@
 <script lang="ts">
 	import type { ContentType } from '$lib/api/contents';
+	import { createForm } from 'felte';
 	import { NumInput, TextInput } from '../EditorInputs';
+	import MarkdownInput from '../EditorInputs/MarkdownInput.svelte';
 	import RefToManyInput from '../EditorInputs/RefToManyInput.svelte';
 	import RefToOneInput from '../EditorInputs/RefToOneInput.svelte';
-	import { Button } from '../Elements';
-	import Modal from '../Elements/Modal.svelte';
+	import { Button, Modal } from '../Elements';
 
 	export let contentType: ContentType;
+
+	const { form, data } = createForm({
+		onSubmit: (values) => {
+			console.log(values);
+		}
+	});
+
+	$: console.log($data);
 
 	let test = false;
 </script>
@@ -23,13 +32,15 @@
 		<div class="flex flex-col">
 			<label for={field.name || key} class="text-lg font-bold">{field.name || key}</label>
 			{#if field.type === 'string'}
-				<TextInput type="text" name={field.name || key} />
+				<TextInput type="text" name={field.name || key} bind:value={$data[key]} />
 			{:else if field.type === 'int'}
-				<NumInput name={field.name || key} />
+				<NumInput name={field.name || key} bind:value={$data[key]} />
 			{:else if field.type === 'reference-to-one'}
-				<RefToOneInput referenceTo={field.referenceTo} />
+				<RefToOneInput referenceTo={field.referenceTo} bind:content={$data[key]} />
 			{:else if field.type === 'reference-to-many'}
-				<RefToManyInput referenceTo={field.referenceTo} />
+				<RefToManyInput referenceTo={field.referenceTo} bind:contents={$data[key]} />
+			{:else if field.type === 'markdown'}
+				<MarkdownInput bind:value={$data[key]} />
 			{:else}
 				<p>Unknown field type: {field.type}</p>
 			{/if}

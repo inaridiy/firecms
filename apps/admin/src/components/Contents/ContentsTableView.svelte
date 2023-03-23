@@ -81,8 +81,8 @@
 						{:else}
 							<td
 								class="whitespace-nowrap px-4 py-2 lg:px-6 lg:py-4 ext-ellipsis max-w-[12rem] overflow-hidden"
-								>{content[column]}</td
-							>
+								>{content[column]}
+							</td>
 						{/if}
 					{/each}
 				</tr>

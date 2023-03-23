@@ -42,6 +42,6 @@
 		/>
 	</div>
 {/if}
-<Button color="outline" className="block max-w-sm mt-4" on:click={() => (open = true)}
-	>Select</Button
->
+<Button color="outline" className="block max-w-sm mt-4" on:click={() => (open = true)}>
+	Select
+</Button>

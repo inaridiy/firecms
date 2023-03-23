@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fetchContentItems, type Content, type ContentType } from '$lib/api/contents';
-	import { createQuery, type CreateQueryResult } from '@tanstack/svelte-query';
+	import { createQuery } from '@tanstack/svelte-query';
 	import { Loader2, SearchIcon } from 'lucide-svelte';
 	import { TextInput } from '../EditorInputs';
 	import { Modal } from '../Elements';
@@ -13,7 +13,6 @@
 	let order = { column: 'createdAt', direction: 'desc' };
 
 	let contentItems: Content[] = [];
-	let contentItemsQuery: CreateQueryResult<Content[]>;
 	$: contentItemsQuery = createQuery({
 		queryKey: ['content-items', contentType?.tableName, { q: search, orders: [order] }],
 		queryFn: () =>
@@ -36,5 +35,7 @@
 			{/if}
 		</div>
 	</div>
-	<ContentsTableView bind:order {contentType} contents={contentItems} on:select />
+	<div class="sm:px-4">
+		<ContentsTableView bind:order {contentType} contents={contentItems} on:select />
+	</div>
 </Modal>
