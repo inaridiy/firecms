@@ -946,21 +946,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.26.1":
-  version: 4.26.1
-  resolution: "@tanstack/query-core@npm:4.26.1"
-  checksum: c7bc751d7d08ce27dd7262aa75a263808b128902b8f3a5dd1ff9b1dfda6511af965388bcdb7d8130bdf10756c1d583f527ead274b1d3e4f4db29c83260b416b0
+"@tanstack/query-core@npm:4.27.0":
+  version: 4.27.0
+  resolution: "@tanstack/query-core@npm:4.27.0"
+  checksum: 914b4f01ac75632f4603b650e9105f64c739b79250baf76aad16cee216f7bad6060c04eda0c70838fe61a5f6c17883e19fcc3075b2433a906539da95ce785796
   languageName: node
   linkType: hard
 
-"@tanstack/svelte-query@npm:^4.24.6":
-  version: 4.26.1
-  resolution: "@tanstack/svelte-query@npm:4.26.1"
+"@tanstack/svelte-query@npm:^4.27.0":
+  version: 4.27.0
+  resolution: "@tanstack/svelte-query@npm:4.27.0"
   dependencies:
-    "@tanstack/query-core": 4.26.1
+    "@tanstack/query-core": 4.27.0
   peerDependencies:
     svelte: ^3.54.0
-  checksum: afc83d31a3821cbaccb898e7fc1552de1753a2a89ccca59378b73ee95b5f7d30998d51538fc1e11087cf4a934c795733d1d9a675aad3001f05f0e0696baead53
+  checksum: 8909a40cd86bc7c5d8857e8ea457ef012e15ec74f8c476a74bcc1887e5335704e91ab61f979c4b08e8705fe1a06b6c85275edb8e41dc4b427da98542835aafee
   languageName: node
   linkType: hard
 
@@ -1289,7 +1289,7 @@ __metadata:
     "@sveltejs/kit": ^1.11.0
     "@sveltejs/package": ^2.0.0
     "@tailwindcss/typography": ^0.5.9
-    "@tanstack/svelte-query": ^4.24.6
+    "@tanstack/svelte-query": ^4.27.0
     "@tanstack/svelte-virtual": ^3.0.0-beta.12
     "@typescript-eslint/eslint-plugin": ^5.45.0
     "@typescript-eslint/parser": ^5.45.0

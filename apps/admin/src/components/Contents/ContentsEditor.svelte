@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { ContentType } from '$lib/api/contents';
 	import { NumInput, TextInput } from '../EditorInputs';
+	import RefToManyInput from '../EditorInputs/RefToManyInput.svelte';
 	import RefToOneInput from '../EditorInputs/RefToOneInput.svelte';
 	import { Button } from '../Elements';
 	import Modal from '../Elements/Modal.svelte';
@@ -27,6 +28,8 @@
 				<NumInput name={field.name || key} />
 			{:else if field.type === 'reference-to-one'}
 				<RefToOneInput referenceTo={field.referenceTo} />
+			{:else if field.type === 'reference-to-many'}
+				<RefToManyInput referenceTo={field.referenceTo} />
 			{:else}
 				<p>Unknown field type: {field.type}</p>
 			{/if}

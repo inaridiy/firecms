@@ -12,7 +12,7 @@
   "forwardPorts": [5173, 8787, 8976],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  // "postCreateCommand": "yarn install",
+  "postCreateCommand": "yarn install && npm install -g wrangler",
 
   // Configure tool-specific properties.
   // "customizations": {},
@@ -31,7 +31,8 @@
         "GitHub.vscode-pull-request-github",
         "christian-kohler.path-intellisense",
         "esbenp.prettier-vscode",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "svelte.svelte-vscode"
       ]
     }
   }

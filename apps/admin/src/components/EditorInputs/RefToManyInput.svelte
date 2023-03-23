@@ -7,13 +7,15 @@
 	import DeletableContentsTable from './DeletableContentsTable.svelte';
 
 	export let referenceTo: string | undefined = undefined;
-	export let content: Content | undefined = undefined;
+	export let contents: Content[] = [];
 
 	let open = false;
 
 	const handleSelectContent = (e: CustomEvent<Content>) => {
 		open = false;
-		content = e.detail;
+		contents = [...contents, e.detail].filter(
+			(content, index, self) => index === self.findIndex((t) => t.id === content.id)
+		);
 	};
 
 	$: referenceTypeQuery = createQuery({
@@ -30,15 +32,16 @@
 />
 {#if $referenceTypeQuery.isLoading}
 	<Loader2 class="p-4 w-12 h-12 animate-spin" />
-{:else if content}
+{:else if contents.length}
 	<div class="w-full max-w-lg overflow-x-auto border-2 border-base-content rounded-box py-2">
 		<DeletableContentsTable
 			tableClass="w-full"
 			contentType={$referenceTypeQuery.data}
-			contents={[content]}
-			on:delete={() => (content = undefined)}
+			{contents}
+			on:delete={(e) => (contents = contents.filter((content) => content.id !== e.detail.id))}
 		/>
 	</div>
-{:else}
-	<Button color="outline" className="block max-w-sm" on:click={() => (open = true)}>Select</Button>
 {/if}
+<Button color="outline" className="block max-w-sm mt-4" on:click={() => (open = true)}
+	>Select</Button
+>
