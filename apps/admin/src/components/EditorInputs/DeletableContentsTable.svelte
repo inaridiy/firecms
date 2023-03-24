@@ -46,7 +46,9 @@
 				</td>
 				{#each contentColumns as column}
 					{#if contentType?.schema[column]?.type === 'reference-to-many'}
-						<td class="px-4 lg:px-6">{`${content[column].length} ${column}`}</td>
+						<td class="px-4 lg:px-6"
+							>{content[column]?.length ? `${content[column]?.length} ${column}` : `Nested`}
+						</td>
 					{:else if contentType?.schema[column]?.type === 'reference-to-one'}
 						<td class="px-4 lg:px-6 text-ellipsis whitespace-nowrap max-w-[8rem] overflow-hidden"
 							>{content[column]?.id}

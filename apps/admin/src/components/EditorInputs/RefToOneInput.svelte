@@ -21,6 +21,7 @@
 		queryFn: () => fetchContentType(referenceTo as string),
 		enabled: Boolean(referenceTo)
 	});
+	$: console.log(content, $referenceTypeQuery.data);
 </script>
 
 <ContentsSelectModal

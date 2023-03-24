@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { fetchContentItems, fetchContentType, type Content } from '$lib/api/contents';
 	import { createQuery } from '@tanstack/svelte-query';
@@ -10,6 +11,10 @@
 
 	let search = '';
 	let order = { column: 'createdAt', direction: 'desc' };
+
+	const handleClickContent = (e: CustomEvent<Content>) => {
+		goto(`/contents/${$page.params.contentType}/${e.detail.id}`);
+	};
 
 	$: contentTypesQuery = createQuery({
 		queryKey: ['content-type', $page.params.contentType],
@@ -48,6 +53,11 @@
 	{:else if $contentItemsQuery.isError}
 		<div class="p-4">Error: {$contentItemsQuery.error}</div>
 	{:else}
-		<ContentsTableView bind:order contentType={$contentTypesQuery.data} contents={contentItems} />
+		<ContentsTableView
+			bind:order
+			contentType={$contentTypesQuery.data}
+			contents={contentItems}
+			on:select={handleClickContent}
+		/>
 	{/if}
 </div>

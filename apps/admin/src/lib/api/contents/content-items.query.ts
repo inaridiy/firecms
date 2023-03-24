@@ -26,3 +26,11 @@ export const fetchContentItems = async (
 	const mapped = data.map((res) => toContent(res));
 	return mapped;
 };
+
+export const fetchContentItem = async (
+	tableName: string,
+	id: string
+): Promise<Content | undefined> => {
+	const { data } = await client.get<ContentRes | undefined>(`/contents/${tableName}/${id}`);
+	return data && toContent(data);
+};

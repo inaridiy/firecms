@@ -111,7 +111,7 @@ export class ContentItemQueryService {
 
     if (data.ids) {
       const ids = data.ids.split(",");
-      query = query.where("id", "in", ids);
+      query = query.where(`${tableName}.id`, "in", ids);
     }
 
     //TODO: More efficient way to do this?

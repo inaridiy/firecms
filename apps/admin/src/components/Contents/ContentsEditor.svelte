@@ -1,30 +1,27 @@
 <script lang="ts">
-	import type { ContentType } from '$lib/api/contents';
+	import type { Content, ContentType } from '$lib/api/contents';
 	import { createForm } from 'felte';
 	import { NumInput, TextInput } from '../EditorInputs';
 	import MarkdownInput from '../EditorInputs/MarkdownInput.svelte';
 	import RefToManyInput from '../EditorInputs/RefToManyInput.svelte';
 	import RefToOneInput from '../EditorInputs/RefToOneInput.svelte';
-	import { Button, Modal } from '../Elements';
+	import { Button } from '../Elements';
 
 	export let contentType: ContentType;
+	export let defaultContent: Content | undefined = undefined;
 
-	const { form, data } = createForm({
+	const { data, createSubmitHandler } = createForm({
 		onSubmit: (values) => {
 			console.log(values);
 		}
 	});
 
-	$: console.log($data);
-
-	let test = false;
+	$: if (defaultContent) $data = defaultContent;
 </script>
-
-<Modal bind:open={test} class="h-72" />
 
 <div class="flex justify-between mt-12 items-center mx-auto max-w-screen-lg">
 	<div class="text-xl font-bold">ContentID: Not Set</div>
-	<Button on:click={() => (test = !test)}>Save</Button>
+	<Button on:click={createSubmitHandler()}>Save</Button>
 </div>
 
 <form class="flex flex-col gap-4 p-2 mx-auto max-w-screen-lg">

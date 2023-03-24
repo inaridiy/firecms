@@ -42,4 +42,21 @@ contentItem.get("/:tableName", async (c) => {
   }
 });
 
+contentItem.get("/:tableName/:contentId", async (c) => {
+  const queryService = new ContentItemQueryService({ db: c.env.DB });
+
+  try {
+    const result = await queryService.queryContentItems({
+      tableName: c.req.param("tableName"),
+      ids: c.req.param("contentId"),
+    });
+    if (!result[0]) return c.json({ message: "Not found" }, 404);
+
+    return c.json(result[0]);
+  } catch (e) {
+    console.log(e);
+    return c.json(e, 500);
+  }
+});
+
 export default contentItem;
