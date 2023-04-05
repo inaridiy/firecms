@@ -1,18 +1,24 @@
 <script lang="ts">
-	import type { Content, ContentType } from '$lib/api/contents';
+	import type { Content, ContentType, SubmittedContent } from '$lib/api/contents';
 	import { createForm } from 'felte';
+	import { createEventDispatcher } from 'svelte';
 	import { NumInput, TextInput } from '../EditorInputs';
 	import MarkdownInput from '../EditorInputs/MarkdownInput.svelte';
 	import RefToManyInput from '../EditorInputs/RefToManyInput.svelte';
 	import RefToOneInput from '../EditorInputs/RefToOneInput.svelte';
 	import { Button } from '../Elements';
 
+	const dispatch = createEventDispatcher<{
+		submit: SubmittedContent;
+	}>();
+
+	export let status = 'none';
 	export let contentType: ContentType;
 	export let defaultContent: Content | undefined = undefined;
 
 	const { data, createSubmitHandler } = createForm({
 		onSubmit: (values) => {
-			console.log(values);
+			dispatch('submit', values);
 		}
 	});
 
@@ -20,11 +26,17 @@
 </script>
 
 <div class="flex justify-between mt-12 items-center mx-auto max-w-screen-lg">
-	<div class="text-xl font-bold">ContentID: Not Set</div>
-	<Button on:click={createSubmitHandler()}>Save</Button>
+	<div class="text-xl font-bold">
+		ContentID: {$data?.id ? `${$data.id.slice(0, 8)}...` : 'Not Set'}
+	</div>
+	<Button
+		loading={status === 'loading'}
+		disabled={status === 'disabled'}
+		on:click={createSubmitHandler()}>Save</Button
+	>
 </div>
 
-<form class="flex flex-col gap-4 p-2 mx-auto max-w-screen-lg">
+<div class="flex flex-col gap-4 p-2 mx-auto max-w-screen-lg">
 	{#each Object.entries(contentType.schema) as [key, field]}
 		<div class="flex flex-col">
 			<label for={field.name || key} class="text-lg font-bold">{field.name || key}</label>
@@ -43,4 +55,4 @@
 			{/if}
 		</div>
 	{/each}
-</form>
+</div>

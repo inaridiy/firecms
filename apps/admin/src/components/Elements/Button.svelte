@@ -1,16 +1,20 @@
 <script lang="ts">
 	import clsx from 'clsx';
+	import { Loader2Icon } from 'lucide-svelte';
 
 	export let className: string | undefined = undefined;
 	export let type: 'button' | 'submit' | 'reset' = 'button';
 	export let href: string | undefined = undefined;
 	export let color: 'normal' | 'primary' | 'secondary' | 'outline' | 'ghost' = 'normal';
 	export let size: 'normal' | 'sm' | 'lg' = 'normal';
+	export let disabled = false;
+	export let loading = false;
 
 	let buttonClass: string;
 	$: buttonClass = clsx(
 		'rounded-btn inline-flex items-center justify-center',
 		'duration-btn active:scale-btn-focus gap-2 font-bold outline-none',
+		'disabled:cursor-not-allowed disabled:opacity-20',
 		{
 			'bg-primary text-primary-content': color === 'primary',
 			'bg-secondary text-secondary-content': color === 'secondary',
@@ -29,6 +33,7 @@
 	this={href ? 'a' : 'button'}
 	{type}
 	{href}
+	disabled={disabled || loading}
 	{...$$restProps}
 	on:click
 	on:change
@@ -39,5 +44,9 @@
 	class={buttonClass}
 >
 	<slot name="left" />
-	<slot />
+	{#if loading}
+		<Loader2Icon class="animate-spin" />
+	{:else}
+		<slot class="" />
+	{/if}
 </svelte:element>

@@ -51,3 +51,7 @@ export type Content = {
 	createdAt: Date;
 	updatedAt: Date;
 };
+
+export type SubmittedContent = Omit<Content, 'id' | 'createdAt' | 'updatedAt'> & {
+	id?: string;
+};
