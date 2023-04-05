@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { isSideMenuOpen } from '$lib/misc';
 	import { Menu } from 'lucide-svelte';
+	export let href = '/';
 	export let title: string;
 	export let loading = false;
 </script>
@@ -9,7 +10,7 @@
 	{#if loading}
 		<div class="h-12 bg-base-200 w-full max-w-lg rounded-lg animate-pulse" />
 	{:else}
-		<h2 class="text-4xl font-bold">{title}</h2>
+		<a {href}> <h2 class="text-4xl font-bold">{title}</h2></a>
 	{/if}
 
 	<button

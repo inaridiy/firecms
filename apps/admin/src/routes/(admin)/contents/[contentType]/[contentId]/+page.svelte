@@ -39,7 +39,11 @@
 	});
 </script>
 
-<Header title={$contentTypesQuery.data?.name || 'Unknown'} loading={$contentTypesQuery.isLoading} />
+<Header
+	href={`/contents/${$page.params.contentType}`}
+	title={$contentTypesQuery.data?.name || 'Unknown'}
+	loading={$contentTypesQuery.isLoading}
+/>
 
 <div class="px-4">
 	{#if !$contentTypesQuery.data || $contentTypesQuery.isLoading}
